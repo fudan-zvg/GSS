@@ -1,4 +1,4 @@
-# <img src="figures/dinosaur.png" width="30"> [CVPR 2023] _Generative Semantic Segmentation_
+# <img src="figures/dinosaur.png" width="30"> _Generative Semantic Segmentation_
 ### [Paper]()
 > [**Generative Semantic Segmentation**](https://arxiv.org/abs/2208.11112),            
 > [Jiaqi Chen](), [Jiachen Lu](), [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
