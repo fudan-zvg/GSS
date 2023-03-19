@@ -42,8 +42,8 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">R101</td>
 <td align="center">80k</td>
 <td align="center">77.76</td>
-<td align="center"></td>
-<td align="center"><a href="">config</a></td>
+<td align="center">85.9</td>
+<td align="center"><a href="configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py">config</a></td>
 <td align="center"><a href="">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
@@ -53,7 +53,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">80k</td>
 <td align="center">78.90</td>
 <td align="center"></td>
-<td align="center"><a href="">config</a></td>
+<td align="center"><a href="configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py">config</a></td>
 <td align="center"><a href="">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
@@ -62,8 +62,8 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">ResNet</td>
 <td align="center">80k</td>
 <td align="center">78.46</td>
-<td align="center"></td>
-<td align="center"><a href="">config</a></td>
+<td align="center">85.92</td>
+<td align="center"><a href="configs/gss/cityscapes/gss-ft-w_r101_768x768_80k_40k_cityscapes.py">config</a></td>
 <td align="center"><a href="">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
@@ -73,7 +73,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">80k</td>
 <td align="center">80.05</td>
 <td align="center"></td>
-<td align="center"><a href="">config</a></td>
+<td align="center"><a href="configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py">config</a></td>
 <td align="center"><a href="">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
@@ -196,9 +196,9 @@ This implementation is build upon [mmsegmentation](https://github.com/open-mmlab
 ### Train & Test
 ```shell
 # train with 8 GPUs
-bash tools/dist_train.sh projects/configs/nuscenes/Fusion_0075_refactor.py 8
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 # test with 8 GPUs
-bash tools/dist_test.sh projects/configs/nuscenes/Fusion_0075_refactor.py ${CHECKPOINT_FILE} 8 --eval=bbox
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ../mmsegmentation/work_dirs/bigseg_cityscapes_conns_res101_80k_025_dim_768_2048_wo_cpm_bs2x8_transformer_right_color_lr_plus/iter_80000.pth 8 --eval mIoU
 ```
 
 ***
