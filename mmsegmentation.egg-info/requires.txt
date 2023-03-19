@@ -1,0 +1,10 @@
+
+[all]
+
+[build]
+
+[mim]
+
+[optional]
+
+[tests]
