@@ -189,7 +189,7 @@ bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscape
 ## Reference
 
 ```bibtex
-@inproceedings{chen2021generative,
+@inproceedings{chen2023generative,
   title={Generative Semantic Segmentation
   author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiatian and Zhang, Li},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
