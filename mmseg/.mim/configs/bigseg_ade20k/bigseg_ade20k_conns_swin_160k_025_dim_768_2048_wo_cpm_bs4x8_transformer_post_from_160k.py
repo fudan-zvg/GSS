@@ -1,3 +1,0 @@
-_base_=['bigseg_ade20k_conns_swin_160k_025_dim_768_2048_wo_cpm_bs4x8_transformer_post.py']
-
-load_from = 'work_dirs/bigseg_ade20k_conns_swin_160k_025_dim_768_2048_wo_cpm_bs4x8_transformer/iter_160000.pth'
