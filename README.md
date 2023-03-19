@@ -44,7 +44,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">77.76</td>
 <td align="center">85.9</td>
 <td align="center"><a href="configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="open-mmlab://resnet101_v1c">pretrain</a></td>
 <td align="center"><a href="https://drive.google.com/drive/folders/1riNfPpzc_6XaCzcNuzqZaRYakO_8aItG?usp=sharing">model</a></td>
 </tr>
 
@@ -54,7 +54,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">78.90</td>
 <td align="center">87.03</td>
 <td align="center"><a href="configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="https://drive.google.com/drive/folders/1BTvchDJtUk4rRJ0qK2rcApbHEAEK1bEZ?usp=sharing">model</a></td>
 </tr>
 
@@ -64,7 +64,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">78.46</td>
 <td align="center">85.92</td>
 <td align="center"><a href="configs/gss/cityscapes/gss-ft-w_r101_768x768_80k_40k_cityscapes.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="open-mmlab://resnet101_v1c">pretrain</a></td>
 <td align="center"><a href="https://drive.google.com/drive/folders/1HDeewsE6E9oLZ9ROCH7KgAHaAZeSUj95?usp=sharing">model</a></td>
 </tr>
 
@@ -74,7 +74,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">80.05</td>
 <td align="center">87.32</td>
 <td align="center"><a href="configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -100,7 +100,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">46.29</td>
 <td align="center">57.84</td>
 <td align="center"><a href="configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -110,7 +110,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">48.54</td>
 <td align="center">58.94</td>
 <td align="center"><a href="configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -134,7 +134,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">160k</td>
 <td align="center">52.60</td>
 <td align="center"><a href="configs/gss/mseg/gss-ff_hrnet-w48_512x512_160k_mseg.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="open-mmlab://msra/hrnetv2_w48">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -143,7 +143,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">160k</td>
 <td align="center">59.49</td>
 <td align="center"><a href="configs/gss/mseg/gss-ff_swin-l_512x512_160k_mseg.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -152,7 +152,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">160k</td>
 <td align="center">55.20</td>
 <td align="center"><a href="configs/gss/mseg/gss-ft-w_hrnet-w48_512x512_160k_40k_mseg.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="open-mmlab://msra/hrnetv2_w48">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -162,7 +162,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">61.94</td>
 
 <td align="center"><a href="configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py">config</a></td>
-<td align="center"><a href="">pretrain</a></td>
+<td align="center"><a href="https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
