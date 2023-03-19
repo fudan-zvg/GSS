@@ -23,8 +23,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ![GSS](figures/framework.png)
 ## Results
 <!-- [RESULTS] -->
-In this part, we present the clean models that do not use extra detection data or tricks.
-### Cityscapes dataset
+### Cityscapes
 
 <table><tbody>
 <!-- START TABLE -->
@@ -80,7 +79,7 @@ In this part, we present the clean models that do not use extra detection data o
 
 </tbody></table>
 
-### ADE20K dataset
+### ADE20K
 
 <table><tbody>
 <!-- START TABLE -->
@@ -116,7 +115,7 @@ In this part, we present the clean models that do not use extra detection data o
 
 </tbody></table>
 
-### MSeg dataset
+### MSeg
 
 <table><tbody>
 <!-- START TABLE -->
@@ -168,16 +167,6 @@ In this part, we present the clean models that do not use extra detection data o
 
 </tbody></table>
 
-## Citation
-
-```bibtex
-@inproceedings{chen2021generative,
-  title={Generative Semantic Segmentation
-  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiatian and Zhang, Li},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2023}
-}
-```
 ***
 
 
@@ -197,4 +186,13 @@ bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscap
 bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ../mmsegmentation/work_dirs/bigseg_cityscapes_conns_res101_80k_025_dim_768_2048_wo_cpm_bs2x8_transformer_right_color_lr_plus/iter_80000.pth 8 --eval mIoU
 ```
 
-***
+## Reference
+
+```bibtex
+@inproceedings{chen2021generative,
+  title={Generative Semantic Segmentation
+  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiatian and Zhang, Li},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2023}
+}
+```
