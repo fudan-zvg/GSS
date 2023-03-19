@@ -152,7 +152,7 @@ In this part, we present the clean models that do not use extra detection data o
 <td align="center">160k</td>
 <td align="center">55.20</td>
 <td align="center"><a href="configs/gss/mseg/gss-ft-w_hrnet-w48_512x512_160k_40k_mseg.py">config</a></td>
-<td align="center"><a href="open-mmlab://msra/hrnetv2_w48">pretrain</a></td>
+<td align="center"><a href="open-mmlab://msra/hrnetv2_w48   ">pretrain</a></td>
 <td align="center"><a href="">model</a></td>
 </tr>
 
@@ -186,9 +186,6 @@ In this part, we present the clean models that do not use extra detection data o
 ### Environment
 This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment.
 
-### Data
-
-### Pretrained
 
 [//]: # (Downloads the [pretrained backbone weights]&#40;https://drive.google.com/file/d/1IaLMcRu4SYTqcD6K1HF5UjfnRICB_IQM/view?usp=sharing&#41; to pretrained/ )
 
