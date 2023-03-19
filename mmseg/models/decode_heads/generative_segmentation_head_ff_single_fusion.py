@@ -64,7 +64,7 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         self.vocab_size = 8192
         self.indice_ignore_index = self.vocab_size
         self.pixel_ignore_index = 255
-        _, self.norm = build_norm_layer(norm_layer, self.channels)
+        # _, self.norm = build_norm_layer(norm_layer, self.channels)
         self.pixel_channel_index = pixel_channel_index
         self.indice_channel_index = indice_channel_index
         self.indice_seg_channel = indice_seg_channel if indice_seg_channel is not None else channels
@@ -72,7 +72,8 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         self.d_vae = get_dalle_vae(
             weight_path="/home/chenjiaqi/pj/mmsegmentation/ckp",
             device="cuda")
-
+        for param in self.d_vae.parameters():
+            param.requires_grad = False
         self.swin_num_head = swin_num_head
         self.swin_depth = swin_depth
         self.swin_window_size = swin_window_size
@@ -149,7 +150,6 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         return out
 
     def forward_train(self, inputs, img_metas, gt_semantic_seg, train_cfg):
-        # print('cjq debug dataset forward_train img_metas[0].dataset_name', img_metas[0]['dataset_name'])
         inputs = self._transform_inputs(inputs)
         x = self.feature_aggregation(inputs)
         b, c, h, w = x.shape
@@ -196,26 +196,6 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
             # 10.16 32号上的第一个bigseg实验没有ignore，而是按照teacher student的范式监督了student
             gt_semantic_seg_indices[ignore_mask == 0] = self.indice_ignore_index
 
-            # error map
-            # error_map = torch.zeros_like(gt_semantic_seg_indices, device=gt_semantic_seg.device)
-            # # the correct predicted pixel will be ignored
-            # error_map[vq_logits.argmax(1).unsqueeze(1) != gt_semantic_seg_indices] = 1
-            # save_image(torch.cat([
-            #     map_pixels(self.encode_to_segmap(gt_semantic_seg) / 255.0),  # gt
-            #     map_pixels(self.encode_to_segmap(gt_semantic_seg_for_recon) / 255.0),
-            #     # pixel_segmap_from_indice_pred / 255.0,
-            #     # map_pixels(self.encode_to_segmap(pixel_pred_from_indice_pred) / 255.0), # prediction
-            #     torch.Tensor.repeat(F.interpolate(error_map.float(), size=gt_semantic_seg.shape[-2:]),
-            #                       3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3),  # indice error map
-            #     torch.Tensor.repeat(ignore_map.float(), 3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3), # ignore map
-            #     torch.Tensor.repeat(F.interpolate(indice_map_mask.float(), size=gt_semantic_seg.shape[-2:]), 3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3),
-            #     torch.Tensor.repeat(F.interpolate(gt_semantic_seg_indices.float(), size=gt_semantic_seg.shape[-2:]),
-            #                         3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3) / 8192.0,
-            #     torch.Tensor.repeat(F.interpolate(vq_logits.argmax(1).unsqueeze(1).float(), size=gt_semantic_seg.shape[-2:]),
-            #                         3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3)/ 8192.0,
-            # ],
-            #     dim=0), 'work_dirs/bigseg_ade20k_conns_swin_160k_wo_cpm/show_train_16k/' + img_metas[0]['ori_filename'].split('/')[-1])
-            # print('cjq save images')
         losses = self.losses(indice_seg_logit=vq_logits,
                              pixel_seg_logit=pixel_logits,
                              masked_indice_seg_label=masked_gt_semantic_seg_indices,
@@ -238,46 +218,12 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         vq_logist = self.forward(x).view(-1, self.vocab_size, h, w)
         vq_indices = vq_logist.argmax(1).unsqueeze(1)
 
-        # x_p = self.feature_aggregation_for_pixel(inputs)
-        # h_p, w_p = x_p.shape[-2:]
-        # pixel_logits = self.conv_seg_pixel(x_p).view(-1, self.num_classes, h_p, w_p)
-        # pixel_logits = F.interpolate(pixel_logits, size=(h * 8, w * 8), mode='bilinear')
-
         rec_segmap = self.d_vae.decode(vq_indices, img_size=[h, w])
         rec_segmap = unmap_pixels(torch.sigmoid(rec_segmap[:, :3])) * 255
         seg_pred = self.decode_from_segmap(torch.tensor(rec_segmap), keep_ignore_index=False)
-        # seg_pred[seg_pred == self.num_classes] = 0  # b, h, w, c
         seg_logist = F.one_hot(seg_pred.to(torch.int64), self.num_classes).squeeze(1).permute(0, 3, 1, 2).to(
             torch.float)
-        # import ipdb;ipdb.set_trace()
-        # save images
-        # vq_indices_show = F.interpolate(vq_indices.float(), size=seg_logist.shape[-2:], mode='bilinear')
-        # gt_semantic_seg[0] = gt_semantic_seg[0].unsqueeze(0)
-        # gt_semantic_seg[0] = F.interpolate(gt_semantic_seg[0].float(), size=seg_logist.shape[-2:], mode='bilinear')
-        # error = gt_semantic_seg[0] - seg_logist.argmax(1).unsqueeze(1)
-        # error[gt_semantic_seg[0] >= self.num_classes] = 0
-        # save_image(torch.cat([map_pixels(self.encode_to_segmap(gt_semantic_seg[0].long()) / 255.0),
-        #                       rec_segmap / 255.0,
-        #                       map_pixels(self.encode_to_segmap(seg_logist.argmax(1).unsqueeze(1).long()) / 255.0),
-        #                       torch.Tensor.repeat(error, 3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3)],
-        #                      dim=0), 'work_dirs/bigseg_mseg_conns_swin_160k_025_2048_trans/show_16k/val_16k_' + img_metas[0]['ori_filename'].split('/')[-1])
-        # print('cjq save images')
 
-        # save indice data, includes semantic_seg_pred (19 classes), gt_semantic_seg (19 classes), vq_ind_pred (8192 classes), vq_indice_gt (8192 classes)
-        # gt_semantic_seg = gt_semantic_seg[0]
-        # gt_semantic_seg[gt_semantic_seg == 255] = self.num_classes
-        # gt_semantic_seg = F.interpolate(
-        #     F.one_hot(gt_semantic_seg.to(torch.long), self.num_classes + 1).squeeze(1).permute(0, 3, 1, 2).to(
-        #         torch.float),
-        #     size=(h * 8, w * 8), mode='bilinear').argmax(1).unsqueeze(1)
-        # gt_semantic_seg[gt_semantic_seg == self.num_classes] = 255
-        # gt_semantic_seg_indices = self.get_gt_vq_indices(gt_semantic_seg).unsqueeze(1)  # % 100
-        #
-        # sio.savemat('work_dirs/mask_vqseg_agg_swin_large_patch4_window12_768x768_pretrain_384x384_22K_300e_cityscapes/annal/' + img_metas[0]['ori_filename'].split('/')[-1].split('.')[0] + '.mat',
-        #             mdict={'semantic_seg_pred': seg_pred.cpu().numpy(),
-        #                    'gt_semantic_seg': gt_semantic_seg.cpu().numpy(),
-        #                    'vq_indices': vq_indices.cpu().numpy(),
-        #                    'vq_indice_gt': gt_semantic_seg_indices.cpu().numpy()})
         return seg_logist
 
     def _forward_test_recon_with_dalle(self, gt_semantic_seg, img_metas):
@@ -294,33 +240,6 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
                 torch.float)
             seg_logist = F.interpolate(seg_logist, size=gt_semantic_seg_item.shape[-2:], mode='bilinear')
             results.append(seg_logist) # [:,:self.num_classes,:,:]
-            # save images
-            # gt_semantic_seg[0] = gt_semantic_seg[0].unsqueeze(0)
-            # gt_semantic_seg[0] = F.interpolate(gt_semantic_seg[0].float(), size=seg_logist.shape[-2:], mode='bilinear')
-            # error = gt_semantic_seg[0] - seg_logist.argmax(1).unsqueeze(1)
-            # error[gt_semantic_seg[0] >= self.num_classes] = 0
-            # error[error > 0] = 1
-            # save_image(torch.cat([map_pixels(self.encode_to_segmap(gt_semantic_seg[0].long()) / 255.0),
-            #                       map_pixels(self.encode_to_segmap(seg_logist.argmax(1).unsqueeze(1).long()) / 255.0),
-            #                       torch.Tensor.repeat(error, 3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3)],
-            #                      dim=0), 'work_dirs/ade20k_change_color/show/val_' + img_metas[0]['ori_filename'].split('/')[-1])
-            # print('cjq save images')
-
-            # save indice data, includes semantic_seg_pred (19 classes), gt_semantic_seg (19 classes), vq_ind_pred (8192 classes), vq_indice_gt (8192 classes)
-            # gt_semantic_seg = gt_semantic_seg[0]
-            # gt_semantic_seg[gt_semantic_seg == 255] = self.num_classes
-            # gt_semantic_seg = F.interpolate(
-            #     F.one_hot(gt_semantic_seg.to(torch.long), self.num_classes + 1).squeeze(1).permute(0, 3, 1, 2).to(
-            #         torch.float),
-            #     size=(h * 8, w * 8), mode='bilinear').argmax(1).unsqueeze(1)
-            # gt_semantic_seg[gt_semantic_seg == self.num_classes] = 255
-            # gt_semantic_seg_indices = self.get_gt_vq_indices(gt_semantic_seg).unsqueeze(1)  # % 100
-            #
-            # sio.savemat('work_dirs/mask_vqseg_agg_swin_large_patch4_window12_768x768_pretrain_384x384_22K_300e_cityscapes/annal/' + img_metas[0]['ori_filename'].split('/')[-1].split('.')[0] + '.mat',
-            #             mdict={'semantic_seg_pred': seg_pred.cpu().numpy(),
-            #                    'gt_semantic_seg': gt_semantic_seg.cpu().numpy(),
-            #                    'vq_indices': vq_indices.cpu().numpy(),
-            #                    'vq_indice_gt': gt_semantic_seg_indices.cpu().numpy()})
         return torch.cat(results, dim=0)
 
     def encode_to_segmap(self, indice):
@@ -341,8 +260,6 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
             segmap = torch.Tensor.repeat(segmap, self.num_classes + 1, 1, 1, 1, 1).permute(1, 0, 2, 3, 4)
         else:
             segmap = segmap.reshape(B, 1, C, H, W)
-            # segmap = torch.Tensor.repeat(segmap, self.num_classes, 1, 1, 1, 1).permute(1, 0, 2, 3, 4)
-        # return torch.abs(segmap - p).sum(2).argmin(1).unsqueeze(1)
         if prob:
             return ((segmap - p) ** 2).sum(2)
         else:
@@ -433,10 +350,3 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         loss['acc_seg_indice'] = accuracy(
             indice_seg_logit, full_indice_seg_label, ignore_index=self.indice_ignore_index)
         return loss
-
-    # visualization
-    # save_image(torch.cat([map_pixels(encode_to_segmap(gt_semantic_seg_item.long()) / 255.0),
-    #                       map_pixels(encode_to_segmap(seg_logist.argmax(1).unsqueeze(1).long()) / 255.0),
-    #                       torch.Tensor.repeat(gt_semantic_seg_item - seg_logist.argmax(1).unsqueeze(1), 3, 1, 1, 1, 1).squeeze(2).permute(1, 0, 2, 3)],
-    #                      dim=0), 'work_dirs/vqseg_vit-large_8x1_768x768_300e_cityscapes_gt_test_2049x1025/show/gt_' + img_metas[0]['ori_filename'].split('/')[-1] + '_debug.png')
-    # print('cjq debug ok')

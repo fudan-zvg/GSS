@@ -29,6 +29,7 @@ from .setr_up_head import SETRUPHead
 from .stdc_head import STDCHead
 from .uper_head import UPerHead
 
+# Generative Semantic Segmentation Heads
 from .generative_segmentation_head_ff import GenerativeSegHeadFF
 from .generative_segmentation_head_ftw import GenerativeSegHeadFTW
 from .generative_segmentation_head_ff_single_fusion import GenerativeSegHeadFFSingleFusion
@@ -41,6 +42,8 @@ __all__ = [
     'SETRMLAHead', 'DPTHead', 'SETRMLAHead', 'SegmenterMaskTransformerHead',
     'SegformerHead', 'ISAHead', 'STDCHead', 'IterativeDecodeHead',
     'KernelUpdateHead', 'KernelUpdator',
+
+    # Generative Semantic Segmentation Heads
     'GenerativeSegHeadFF',
     'GenerativeSegHeadFFSingleFusion',
     'GenerativeSegHeadFTW',

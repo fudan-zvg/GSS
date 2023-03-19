@@ -19,6 +19,7 @@ from mmseg.models.decode_heads.decode_head import BaseDecodeHead
 from mmseg.ops import resize
 
 from mmseg.models.backbones.swin import SwinBlockSequence
+
 @HEADS.register_module()
 class GenerativeSegHeadFF(BaseDecodeHead):
     """
@@ -167,7 +168,6 @@ class GenerativeSegHeadFF(BaseDecodeHead):
         for idx in range(len(inputs)):
             x = inputs[idx]
             conv = self.convs_pixel[idx]
-            # torch.cuda.empty_cache()
             outs_for_pixel.append(
                 resize(
                     input=conv(x),
@@ -213,15 +213,12 @@ class GenerativeSegHeadFF(BaseDecodeHead):
             ignore_map = torch.ones_like(gt_semantic_seg, device=gt_semantic_seg.device)
             ignore_map[gt_semantic_seg >= self.num_classes] = 0
             ignore_mask = F.max_pool2d(ignore_map.float(), kernel_size=(8, 8), stride=(8, 8))
-
-            # indice_map_mask = relaxation_map * ignore_mask
             indice_map_mask = ignore_mask
 
             # get final gt indices
             masked_gt_semantic_seg_indices = gt_semantic_seg_indices.clone()
             masked_gt_semantic_seg_indices[indice_map_mask == 0] = self.indice_ignore_index
 
-            # 10.16 32号上的第一个bigseg实验没有ignore，而是按照teacher student的范式监督了student
             gt_semantic_seg_indices[ignore_mask == 0] = self.indice_ignore_index
         losses = self.losses(indice_seg_logit=vq_logits,
                              pixel_seg_logit=pixel_logits,

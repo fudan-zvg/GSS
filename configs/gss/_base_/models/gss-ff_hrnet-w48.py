@@ -1,6 +1,3 @@
-norm_cfg = dict(type='SyncBN', requires_grad=True)
-backbone_norm_cfg = dict(type='LN', requires_grad=True)
-img_size = (768, 768)
 model = dict(
     type='MultiDomainEncoderDecoder',
     pretrained='open-mmlab://msra/hrnetv2_w48',
@@ -34,7 +31,7 @@ model = dict(
                 num_blocks=(4, 4, 4, 4),
                 num_channels=(48, 96, 192, 384)))),
     decode_head=dict(
-        type='BigSegAggHeadWoCPMTransformerSingleFusion',
+        type='GenerativeSegHeadFFSingleFusion',
         in_channels=[96, 48, 192, 384],
         in_index=[1, 0, 2, 3],
         channels=384,

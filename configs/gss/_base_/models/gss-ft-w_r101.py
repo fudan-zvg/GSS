@@ -1,6 +1,3 @@
-norm_cfg = dict(type='SyncBN', requires_grad=True)
-backbone_norm_cfg = dict(type='LN', requires_grad=True)
-img_size = (768, 768)
 model = dict(
     type='EncoderDecoder',
     pretrained='open-mmlab://resnet101_v1c',

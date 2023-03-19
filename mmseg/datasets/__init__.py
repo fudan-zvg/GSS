@@ -19,10 +19,8 @@ from .potsdam import PotsdamDataset
 from .stare import STAREDataset
 from .voc import PascalVOCDataset
 from .mseg import MSegDataset
-from .nyu_depth_v2 import NYUDepthV2
 
-# customized dataset for mmdetection
-from .cityscapes_semantic_for_mmdet import CityscapesSemanticDataset
+
 __all__ = [
     'CustomDataset', 'build_dataloader', 'ConcatDataset', 'RepeatDataset',
     'DATASETS', 'build_dataset', 'PIPELINES', 'CityscapesDataset',
@@ -32,8 +30,4 @@ __all__ = [
     'COCOStuffDataset', 'LoveDADataset', 'MultiImageMixDataset',
     'iSAIDDataset', 'ISPRSDataset', 'PotsdamDataset',
     'MSegDataset',
-    'NYUDepthV2',
-
-    # customized dataset for mmdetection
-    'CityscapesSemanticDataset'
 ]

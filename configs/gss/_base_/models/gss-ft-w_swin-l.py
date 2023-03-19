@@ -1,6 +1,3 @@
-norm_cfg = dict(type='SyncBN', requires_grad=True)
-backbone_norm_cfg = dict(type='LN', requires_grad=True)
-img_size = (768, 768)
 model = dict(
     type='EncoderDecoder',
     pretrained=None,
@@ -27,7 +24,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=
-            '/home/chenjiaqi/pj/mmsegmentation/ckp/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth'
+            'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth'
         ),
         with_cp=False,
         frozen_stages=4),
@@ -90,7 +87,7 @@ model = dict(
         indice_cls_channel=2048,
         post_seg_channel=128,
         post_swin_num_head=4,
-        post_swin_depth=2,
+        post_swin_depth=1,
         post_swin_window_size=7),
     train_cfg=dict(),
     test_cfg=dict(mode='whole'))

@@ -12,6 +12,7 @@ model = dict(
     decode_head=dict(
         type='GenerativeSegHeadFTW',
         num_classes=194,
+        post_swin_depth=2,
         palette=[[2, 7, 214], [9, 16, 234], [3, 52, 5], [13, 65, 50],
                  [9, 52, 79], [5, 64, 106], [5, 67, 136], [3, 65, 180],
                  [9, 62, 215], [14, 59, 242], [6, 117, 8], [3, 104, 42],

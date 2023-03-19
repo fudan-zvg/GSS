@@ -70,21 +70,9 @@ class MultiDomainEncoderDecoder(EncoderDecoder):
         seg_logit = self.inference(img, img_meta, rescale, **kwargs)
         num_cls = seg_logit.shape[1]
         seg_logit = F.one_hot(seg_logit.argmax(1).long(), num_cls).float().squeeze(1).permute(0, 3, 1, 2)
-        # print('\ncjq debug seg_pred before u2s:', seg_logit.argmax(1))
-        # seg_logit = F.softmax(seg_logit, dim=1)
 
         seg_logit = self.universal2test_mappings[img_meta[0]['dataset_name']](seg_logit)
         seg_pred = seg_logit.argmax(dim=1)
-        # print('\ncjq debug seg_pred after u2s:', seg_pred)
-        # import os
-        # file_dir = 'work_dirs/visualization_stage_2/mseg_learnable/' + img_meta[0]['dataset_name'] + '/'
-        # if not os.path.exists(file_dir):
-        #     os.makedirs(file_dir)
-        # from torchvision.utils import save_image, make_grid
-        # save_image(self.decode_head.v_encode_to_segmap(seg_pred.long()) / 255.0,
-        #            file_dir +
-        #            img_meta[0]['ori_filename'].split('/')[-1].split('.')[0] + '_learnable_pred.png')
-        # print('cjq debug save')
         if torch.onnx.is_in_onnx_export():
             # our inference backend only support 4D output
             seg_pred = seg_pred.unsqueeze(0)

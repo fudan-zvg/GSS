@@ -1,24 +1,3 @@
-root_dir = '/home/chenjiaqi/pj/mseg-api/mseg/dataset_lists/'
-context_dir = ''
-camvid_dir = ''
-wilddash = ''
-kitti_dir = ''
-scannet_dir = ''
-
-
-with open(root_dir + 'kitti-19/kitti-19_colors.txt', 'r') as f:
-    line = f.readline()
-    result = []
-    while line is not None:
-        r, g, b = line.strip("\n").split()
-        result.append([int(r), int(g), int(b)])
-        line = f.readline()
-        print(result)
-
-
-if __name__ == '__main__':
-    pass
-
 CONTEXT_PALETTE = [[120, 120, 120], [180, 120, 120], [6, 230, 230], [80, 50, 50],
                [4, 200, 3], [120, 120, 80], [140, 140, 140], [204, 5, 255],
                [230, 230, 230], [4, 250, 7], [224, 5, 255], [235, 255, 7],

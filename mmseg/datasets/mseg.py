@@ -80,11 +80,6 @@ class MSegDataset(CustomDataset):
             self.__class__.CLASSES = self.to_universal_label.tax_converter.dataset_classnames[self.dataset_name]
             self.__class__.PALETTE = self.__class__.PALETTE[:len(self.__class__.CLASSES)]
             self.CLASSES, self.PALETTE = self.__class__.CLASSES, self.__class__.PALETTE
-        # self.id_to_uid_mapping = self.to_universal_label.tax_converter.id_to_uid_maps[self.dataset_name]
-        # uid_to_id_mapping = dict([val, key] for key, val in self.id_to_uid_mapping.items())
-        # self.sorted_uid_to_id_mapping = dict(sorted(uid_to_id_mapping.items(), key=lambda item: item[0]))
-        # self.uid_keep_list = list(self.sorted_uid_to_id_mapping.keys())[:]
-        # self.sorted_id_list = list(uid_to_id_mapping.values())[:]
 
     def mseg_load_annotations(self, img_dir, img_prefix, img_suffix, ann_dir, seg_map_prefix, seg_map_suffix,
                          split):
