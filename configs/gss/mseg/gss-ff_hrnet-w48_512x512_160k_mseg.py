@@ -16,9 +16,8 @@ optimizer = dict(
             norm=dict(decay_mult=0.0))))
 optimizer_config = dict()
 runner = dict(type='IterBasedRunner', max_iters=160000)
-checkpoint_config = dict(by_epoch=False, interval=4000)
-evaluation = dict(interval=8000, metric='mIoU', pre_eval=True)
-checkpoint_file = '/home/chenjiaqi/pj/mmsegmentation/ckp/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth'
+checkpoint_config = dict(by_epoch=False, interval=16000)
+evaluation = dict(interval=16000, metric='mIoU', pre_eval=True)
 
 lr_config = dict(
     policy='poly',

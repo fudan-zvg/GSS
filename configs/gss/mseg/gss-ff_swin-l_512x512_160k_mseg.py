@@ -1,60 +1,14 @@
-norm_cfg = dict(type='SyncBN', requires_grad=True)
-backbone_norm_cfg = dict(type='LN', requires_grad=True)
-img_size = (768, 768)
+_base_ = [
+    '../_base_/datasets/mseg_512x512.py',
+    '../_base_/models/gss-ff_swin-l.py',
+    '../_base_/default_runtime.py'
+]
+
 model = dict(
     type='MultiDomainEncoderDecoder',
-    pretrained='open-mmlab://msra/hrnetv2_w48',
-    backbone=dict(
-        type='HRNet',
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
-        norm_eval=False,
-        extra=dict(
-            stage1=dict(
-                num_modules=1,
-                num_branches=1,
-                block='BOTTLENECK',
-                num_blocks=(4, ),
-                num_channels=(64, )),
-            stage2=dict(
-                num_modules=1,
-                num_branches=2,
-                block='BASIC',
-                num_blocks=(4, 4),
-                num_channels=(48, 96)),
-            stage3=dict(
-                num_modules=4,
-                num_branches=3,
-                block='BASIC',
-                num_blocks=(4, 4, 4),
-                num_channels=(48, 96, 192)),
-            stage4=dict(
-                num_modules=3,
-                num_branches=4,
-                block='BASIC',
-                num_blocks=(4, 4, 4, 4),
-                num_channels=(48, 96, 192, 384)))),
     decode_head=dict(
-        type='BigSegAggHeadWoCPMTransformerSingleFusion',
-        in_channels=[96, 48, 192, 384],
-        in_index=[1, 0, 2, 3],
-        channels=384,
-        dropout_ratio=0.1,
-        img_size=(768, 768),
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
-        align_corners=False,
+        type='GenerativeSegHeadFFSingleFusion',
         num_classes=194,
-        loss_decode=[
-            dict(
-                type='CrossEntropyLoss',
-                loss_name='loss_ce',
-                use_sigmoid=False,
-                loss_weight=0.8),
-            dict(
-                type='CrossEntropyLoss',
-                loss_name='loss_ce_pixel',
-                use_sigmoid=False,
-                loss_weight=0.2)
-        ],
         palette=[[2, 7, 214], [9, 16, 234], [3, 52, 5], [13, 65, 50],
                  [9, 52, 79], [5, 64, 106], [5, 67, 136], [3, 65, 180],
                  [9, 62, 215], [14, 59, 242], [6, 117, 8], [3, 104, 42],
@@ -77,7 +31,7 @@ model = dict(
                  [123, 5, 82], [119, 6, 109], [116, 5, 135], [121, 2, 181],
                  [111, 5, 212], [118, 6, 238], [116, 66, 5], [122, 53, 43],
                  [116, 59, 69], [110, 53, 112], [112, 55, 146], [117, 61, 175],
-                 [120, 61, 211], [111, 57, 248], [124, 118, 11], [122, 106, 36],
+                 [120, 61, 211], [111, 57, 248], [124, 118,11], [122, 106, 36],
                  [123, 105, 83], [110, 106, 108], [116, 115, 137],
                  [116, 104, 171], [111, 108, 209], [119, 105, 234],
                  [125, 167, 9], [122, 166, 48],
@@ -105,13 +59,32 @@ model = dict(
                  [230, 109, 177], [229, 113, 209], [234, 103, 239],
                  [231, 168, 17], [234, 154, 43], [227, 162, 83], [227, 164, 112],
                  [222, 156, 146], [233, 155, 174], [220, 158, 213],
-                 [221, 163, 236], [228, 211, 4], [232, 220,  40], [233, 213, 78],
+                 [221, 163, 236], [228, 211, 4], [232, 220, 40], [233, 213, 78],
                  [233, 220, 113], [233, 210, 142], [223, 217, 173],
-                 [225, 207, 207], [226, 220, 243], [0, 0, 0]],
-        indice_channel_index=1,
-        pixel_channel_index=1,
-        indice_seg_channel=512,
-        indice_cls_channel=2048,
-        swin_depth=6),
-    train_cfg=dict(),
-    test_cfg=dict(mode='slide', crop_size=(768, 768), stride=(512, 512)))
+                 [225, 207, 207], [226, 220, 243], [0, 0, 0]]),
+    test_cfg=dict(mode='slide', crop_size=(768, 768), stride=(512, 512))
+)
+
+optimizer = dict(
+    type='AdamW',
+    lr=0.00012,
+    betas=(0.9, 0.999),
+    weight_decay=0.01,
+    paramwise_cfg=dict(
+        custom_keys=dict(
+            absolute_pos_embed=dict(decay_mult=0.0),
+            relative_position_bias_table=dict(decay_mult=0.0),
+            norm=dict(decay_mult=0.0))))
+optimizer_config = dict()
+runner = dict(type='IterBasedRunner', max_iters=160000)
+checkpoint_config = dict(by_epoch=False, interval=8000)
+evaluation = dict(interval=40000, metric='mIoU', pre_eval=True)
+
+lr_config = dict(
+    policy='poly',
+    warmup='linear',
+    warmup_iters=1500,
+    warmup_ratio=1e-06,
+    power=1.0,
+    min_lr=0.0,
+    by_epoch=False)

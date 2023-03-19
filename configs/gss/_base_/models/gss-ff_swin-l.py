@@ -31,7 +31,7 @@ model = dict(
         ),
         with_cp=False),
     decode_head=dict(
-        type='BigSegAggHeadWoCPMTransformer',
+        type='GenerativeSegHeadFF',
         in_channels=[384, 192, 768, 1536],
         in_index=[1, 0, 2, 3],
         channels=384,
