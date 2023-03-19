@@ -1,6 +1,8 @@
 # <img src="figures/dinosaur.png" width="30"> [CVPR 2023] _Generative Semantic Segmentation_
-[Jiaqi Chen](), [Jiachen Lu](), [Xiafeng Zhu](), and [Li Zhang]()
-
+### [Paper]()
+> [**Generative Semantic Segmentation**](https://arxiv.org/abs/2208.11112),            
+> [Jiaqi Chen](), [Jiachen Lu](), [Xiafeng Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
+> **CVPR 2023**
 ## Abstract
 
 <!-- [ABSTRACT] -->
@@ -19,40 +21,8 @@ Extensive experiments on standard benchmarks show that our GSS can perform compe
 whilst achieving a new state of the art in the more challenging cross-domain setting.
 <!-- [IMAGE] -->
 ![GSS](figures/framework.png)
-## Citation
-
-```bibtex
-@inproceedings{chen2021generative,
-  title={Generative Semantic Segmentation
-  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiafeng and Zhang, Li},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2023}
-}
-```
-This repository is the official implementation of the paper [Generative Semantic Segmentation]().
-
-***
-
-## Installation
-
-See [installation instructions](INSTALL.md).
-
-
-
-## Getting Started
-See [Inference Demo with Pre-trained Model](demo/README.md)
-
-See [Results](#results).
-
-See [Preparing Datasets for GSS](datasets/README.md).
-
-See [Getting Started](#getting-started).
-
-See [More Usage](#more-usage).
-
-***
-
-# Results
+## Results
+<!-- [RESULTS] -->
 In this part, we present the clean models that do not use extra detection data or tricks.
 ### Cityscapes dataset
 
@@ -197,3 +167,38 @@ In this part, we present the clean models that do not use extra detection data o
 </tr>
 
 </tbody></table>
+## Citation
+
+```bibtex
+@inproceedings{chen2021generative,
+  title={Generative Semantic Segmentation
+  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiafeng and Zhang, Li},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2023}
+}
+```
+***
+
+
+## Get Started
+
+### Environment
+This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment.
+
+### Data
+
+[//]: # (Please follow the official instructions of mmdetection3d to process the nuScenes dataset.&#40;https://mmdetection3d.readthedocs.io/en/latest/datasets/nuscenes_det.html&#41;)
+
+### Pretrained
+
+[//]: # (Downloads the [pretrained backbone weights]&#40;https://drive.google.com/file/d/1IaLMcRu4SYTqcD6K1HF5UjfnRICB_IQM/view?usp=sharing&#41; to pretrained/ )
+
+### Train & Test
+```shell
+# train with 8 GPUs
+bash tools/dist_train.sh projects/configs/nuscenes/Fusion_0075_refactor.py 8
+# test with 8 GPUs
+bash tools/dist_test.sh projects/configs/nuscenes/Fusion_0075_refactor.py ${CHECKPOINT_FILE} 8 --eval=bbox
+```
+
+***
