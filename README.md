@@ -1,7 +1,7 @@
 # <img src="figures/dinosaur.png" width="30"> [CVPR 2023] _Generative Semantic Segmentation_
 ### [Paper]()
 > [**Generative Semantic Segmentation**](https://arxiv.org/abs/2208.11112),            
-> [Jiaqi Chen](), [Jiachen Lu](), [Xiafeng Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
+> [Jiaqi Chen](), [Jiachen Lu](), [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
 > **CVPR 2023**
 ## Abstract
 
@@ -173,7 +173,7 @@ In this part, we present the clean models that do not use extra detection data o
 ```bibtex
 @inproceedings{chen2021generative,
   title={Generative Semantic Segmentation
-  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiafeng and Zhang, Li},
+  author={Chen, Jiaqi and Lu, Jiachen and Zhu, Xiatian and Zhang, Li},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
   year={2023}
 }
