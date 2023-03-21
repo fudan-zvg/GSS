@@ -24,10 +24,8 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 ## TODO List
 
-- [ ] Upload model weights
+- [ ] Upload model weights and DALL-E VQVAE weight
 - [ ] Complete install.md
-- [ ] Write README file
-- [ ] Add sample code
 - [ ] Add dataset link
 
 ## Results
