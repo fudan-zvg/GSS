@@ -183,7 +183,7 @@ This implementation is build upon [mmsegmentation](https://github.com/open-mmlab
 # train with 8 GPUs
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 # test with 8 GPUs
-bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ../mmsegmentation/work_dirs/bigseg_cityscapes_conns_res101_80k_025_dim_768_2048_wo_cpm_bs2x8_transformer_right_color_lr_plus/iter_80000.pth 8 --eval mIoU
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
 ```
 
 ## Reference
