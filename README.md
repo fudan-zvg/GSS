@@ -76,7 +76,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">80.05</td>
 <td align="center">87.32</td>
 <td align="center"><a href="configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py">config</a></td>
-<td align="center"><a href="">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1Rin_JkIsgAtjXgI5ruKW-gmC6fpawTrx?usp=share_link">google drive</a></td>
 </tr>
 
 </tbody></table>
@@ -100,7 +100,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">46.29</td>
 <td align="center">57.84</td>
 <td align="center"><a href="configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py">config</a></td>
-<td align="center"><a href="">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1OnzGL5szxYlUnv2zmAkdw-mA-3pTNo_w?usp=sharing">google drive</a></td>
 </tr>
 
  <tr><td align="left">GSS-FT-W</td>
@@ -109,7 +109,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">48.54</td>
 <td align="center">58.94</td>
 <td align="center"><a href="configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py">config</a></td>
-<td align="center"><a href="">google  drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1fubhnOPnr-s5U0M5A-WWJIV-eKmhcH4f?usp=sharing">google  drive</a></td>
 </tr>
 
 </tbody></table>
@@ -131,7 +131,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">160k</td>
 <td align="center">52.60</td>
 <td align="center"><a href="configs/gss/mseg/gss-ff_hrnet-w48_512x512_160k_mseg.py">config</a></td>
-<td align="center"><a href="">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1HRQ6ZUE7TwYByeb5uBAlGh4vuqo4XsnZ?usp=share_link">google drive</a></td>
 </tr>
 
  <tr><td align="left">GSS-FF</td>
@@ -139,7 +139,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">160k</td>
 <td align="center">59.49</td>
 <td align="center"><a href="configs/gss/mseg/gss-ff_swin-l_512x512_160k_mseg.py">config</a></td>
-<td align="center"><a href="">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1br9IAcOHXkJsPoG0DBEwkN97U5V5liEZ?usp=sharing">google drive</a></td>
 </tr>
 
  <tr><td align="left">GSS-FT-W</td>
@@ -147,7 +147,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">160k</td>
 <td align="center">55.20</td>
 <td align="center"><a href="configs/gss/mseg/gss-ft-w_hrnet-w48_512x512_160k_40k_mseg.py">config</a></td>
-<td align="center"><a href="">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1KMowx8omTy2AyiPmvz-JJ60JlLKk61di?usp=sharing">google drive</a></td>
 </tr>
 
  <tr><td align="left">GSS-FT-W</td>
@@ -156,7 +156,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <td align="center">61.94</td>
 
 <td align="center"><a href="configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py">config</a></td>
-<td align="center"><a href="">google  drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1OmDq7tFattm4IfwDIYKVJS05LJaPme9p?usp=sharing">google  drive</a></td>
 </tr>
 
 </tbody></table>
