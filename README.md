@@ -1,7 +1,7 @@
 # <img src="figures/dinosaur.png" width="30"> _Generative Semantic Segmentation_
 ### [Paper](https://arxiv.org/abs/2303.11316)
 > [**Generative Semantic Segmentation**](https://arxiv.org/abs/2303.11316),            
-> [Jiaqi Chen](https://scholar.google.com/citations?user=Au_y5poAAAAJ), [Jiachen Lu](), [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
+> [Jiaqi Chen](https://scholar.google.com/citations?user=Au_y5poAAAAJ), Jiachen Lu, [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
 > **CVPR 2023**
 ## Abstract
 
