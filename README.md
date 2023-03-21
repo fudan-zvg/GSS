@@ -1,7 +1,7 @@
 # <img src="figures/dinosaur.png" width="30"> _Generative Semantic Segmentation_
 ### [Paper](https://arxiv.org/abs/2303.11316)
-> [**Generative Semantic Segmentation**](https://arxiv.org/abs/2303.11316),            
-> [Jiaqi Chen](https://scholar.google.com/citations?user=Au_y5poAAAAJ), Jiachen Lu, [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
+> [**Generative Semantic Segmentation**](https://arxiv.org/abs/2208.11112),            
+> [Jiaqi Chen](https://scholar.google.com/citations?user=Au_y5poAAAAJ), [Jiachen Lu](), [Xiatian Zhu](https://xiatian-zhu.github.io), and [Li Zhang](https://lzrobots.github.io) \
 > **CVPR 2023**
 ## Abstract
 
@@ -170,16 +170,14 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ### Environment
 This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment.
 
-[//]: # (### Data)
-
-
-
+### Data
+Our project is developed based on MMsegmentation. Please follow the official MMsegmentation INSTALL.md and getting_started.md for installation and dataset preparation.
 [//]: # (Downloads the [pretrained backbone weights]&#40;https://drive.google.com/file/d/1IaLMcRu4SYTqcD6K1HF5UjfnRICB_IQM/view?usp=sharing&#41; to pretrained/ )
 
-### Train and eval
+### Train
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
-#### Latent posterior learning for $\mathcal{X}$ (will be released soon)
-The actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
+#### Efficient latent posterior learning for $\mathcal{X}$ (will be released soon)
+The first stage is **posterior Learning**, where the actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
 
 ```bash
 python tools/posterior_learning.py --num_classes 150
@@ -193,21 +191,11 @@ bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade2
 The pre-generated colors from latent posterior learning stage have already been provided in all configs.
 ```shell
 # train with 8 GPUs
-bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py 8
-# test with 8 GPUs (only for GSS-FF)
-bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
-```
-
-#### Latent posterior learning for $\mathcal{X}^{-1}$ (only for GSS-FF)
-$\mathcal{X}^{-1}$ is the inverse of $\mathcal{X}$, which is used to generate the segmentation mask from the predicted maskige. To run this stage, please execute the following command:
-
-```shell
-# train with 8 GPUs
-bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 # test with 8 GPUs
-python tools/composite_gss_ckp.py --encoder_ckp ./ckp_dir/iter_80000.pth --image_encoder_ckp ./gss_ff_model_ckp_path/iter_80000.pth --maskige2mask_module_ckp ./maskige2mask_module_ckp_pth/iter_40000.pth ----output_ckp ./maskige2mask_module_ckp_pth/encoder_80k_maskige2mask_40k_from_32k.pth
-bash tools/dist_test.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py ./maskige2mask_module_ckp_pth/encoder_80k_maskige2mask_40k_from_32k.pth 8 --eval mIoU
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
 ```
+
 ## Reference
 
 ```bibtex
