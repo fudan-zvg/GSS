@@ -21,6 +21,15 @@ Extensive experiments on standard benchmarks show that our GSS can perform compe
 whilst achieving a new state of the art in the more challenging cross-domain setting.
 <!-- [IMAGE] -->
 ![GSS](figures/framework.png)
+
+## TODO List
+
+- [ ] Upload model weights
+- [ ] Complete install.md
+- [ ] Write README file
+- [ ] Add sample code
+- [ ] Add dataset link
+
 ## Results
 <!-- [RESULTS] -->
 ### Cityscapes
