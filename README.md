@@ -25,6 +25,8 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ## TODO List
 
 - [ ] Upload model weights and DALL-E VQVAE weight
+- [ ] Provide stage-1 training code and Maskige reconstruction code
+- [ ] Provide the illustration of the GSS-FF and GSS-FT-W (and more training details)
 - [ ] Complete install.md
 - [ ] Add dataset link
 
@@ -163,23 +165,49 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 ***
 
-
 ## Get Started
 
 ### Environment
 This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment.
 
+[//]: # (### Data)
+
+
 
 [//]: # (Downloads the [pretrained backbone weights]&#40;https://drive.google.com/file/d/1IaLMcRu4SYTqcD6K1HF5UjfnRICB_IQM/view?usp=sharing&#41; to pretrained/ )
 
-### Train & Test
-```shell
-# train with 8 GPUs
-bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
-# test with 8 GPUs
-bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
+### Train and eval
+Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
+#### Latent posterior learning for $\mathcal{X}$ (will be released soon)
+The actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
+
+```bash
+python tools/posterior_learning.py --num_classes 150
+```
+You can use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
+```bash
+bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
 ```
 
+#### Latent prior learning
+The pre-generated colors from latent posterior learning stage have already been provided in all configs.
+```shell
+# train with 8 GPUs
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py 8
+# test with 8 GPUs (only for GSS-FF)
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_swin-l_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
+```
+
+#### Latent posterior learning for $\mathcal{X}^{-1}$ (only for GSS-FF)
+$\mathcal{X}^{-1}$ is the inverse of $\mathcal{X}$, which is used to generate the segmentation mask from the predicted maskige. To run this stage, please execute the following command:
+
+```shell
+# train with 8 GPUs
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8
+# test with 8 GPUs
+python tools/composite_gss_ckp.py --encoder_ckp ./ckp_dir/iter_80000.pth --image_encoder_ckp ./gss_ff_model_ckp_path/iter_80000.pth --maskige2mask_module_ckp ./maskige2mask_module_ckp_pth/iter_40000.pth ----output_ckp ./maskige2mask_module_ckp_pth/encoder_80k_maskige2mask_40k_from_32k.pth
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py ./maskige2mask_module_ckp_pth/encoder_80k_maskige2mask_40k_from_32k.pth 8 --eval mIoU
+```
 ## Reference
 
 ```bibtex
@@ -190,3 +218,5 @@ bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscape
   year={2023}
 }
 ```
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
