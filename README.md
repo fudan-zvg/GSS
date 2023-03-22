@@ -168,16 +168,15 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ## Get Started
 
 ### Environment
-This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment.
+This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment and dataset preparation.
 
-### Data
-Our project is developed based on MMsegmentation. Please follow the official MMsegmentation INSTALL.md and getting_started.md for installation and dataset preparation.
 
 ### Pre-trained Models
-As stated in the paper, we utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and decoder. Please download the encoder and decoder weights using following command: 
+We utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and decoder. Please download the encoder and decoder weights using following command: 
 ```bash
 bash tools/download_pretrain_vqvae.sh
 ```
+
 ### Train
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
 #### Efficient latent posterior learning for $\mathcal{X}$ (will be released soon)
@@ -186,7 +185,7 @@ The first stage is **posterior Learning**, where the actual task performed is as
 ```bash
 python tools/posterior_learning.py --num_classes 150
 ```
-You can use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
+Please use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
 ```bash
 bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
 ```
