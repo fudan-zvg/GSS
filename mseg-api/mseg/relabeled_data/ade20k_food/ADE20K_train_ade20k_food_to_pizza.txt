@@ -1,2 +1,0 @@
-ADE_train_00002170_165.png
-ADE_train_00002170_150.png
