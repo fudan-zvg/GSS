@@ -167,21 +167,27 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 ## Get Started
 
-### Environment
+### Prepare Environment
 This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment and dataset preparation.
 
-
-### Pre-trained Models
 We utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and decoder. Please download the encoder and decoder weights using following command: 
 ```bash
 bash tools/download_pretrain_vqvae.sh
 ```
+### Eval
+Please download the pre-trained model weights and put them in the `./<ckp_dir>` folder.
+We provide the following scripts to evaluate GSS. 
+```bash
+bash tools/dist_test.sh ${CONFIG_FILE} ${CHECKPOINT_FILE} ${GPU_NUM} --eval mIoU
+```
+For example, to evaluate the GSS-FF model on Cityscapes dataset, run:
+```bash
+# test with 8 GPUs
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./<ckp_dir>/gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth 8 --eval mIoU
+```
 
 ### Train
-The training process is divided into 1. latent posterior learning of $/mathcal{X}$; 2. latent prior learning; and 3. latent posterior learning of $/mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W). See [TRAIN.md](./readme/TRAIN.md) for more information.
-
-### Test
-
+The training process is divided into 1. latent posterior learning of $\mathcal{X}$; 2. latent prior learning; and 3. latent posterior learning of $\mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W). See [TRAIN.md](./readme/TRAIN.md) for more information.
 
 ## Reference
 
