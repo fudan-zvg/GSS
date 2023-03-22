@@ -205,5 +205,6 @@ bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscape
   year={2023}
 }
 ```
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+[//]: # (<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>)
 
