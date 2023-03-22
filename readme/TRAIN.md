@@ -16,8 +16,6 @@ The pre-generated colors from latent posterior learning stage have already been 
 ```shell
 # train with 8 GPUs
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
-# test with 8 GPUs
-bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
 ```
 
 ### Latent posterior learning for $\mathcal{X}^{-1}$ (will be released soon)
