@@ -172,7 +172,6 @@ This implementation is build upon [mmsegmentation](https://github.com/open-mmlab
 
 ### Data
 Our project is developed based on MMsegmentation. Please follow the official MMsegmentation INSTALL.md and getting_started.md for installation and dataset preparation.
-[//]: # (Downloads the [pretrained backbone weights]&#40;https://drive.google.com/file/d/1IaLMcRu4SYTqcD6K1HF5UjfnRICB_IQM/view?usp=sharing&#41; to pretrained/ )
 
 ### Train
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
