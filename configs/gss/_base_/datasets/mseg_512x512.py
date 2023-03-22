@@ -1,5 +1,5 @@
 # dataset settings
-split_root = '/home/chenjiaqi/pj/mmsegmentation/'
+split_root = ''
 meta_keys = ('filename', 'ori_filename', 'ori_shape',
              'img_shape', 'pad_shape', 'scale_factor',
              'flip', 'flip_direction', 'img_norm_cfg',
@@ -232,7 +232,7 @@ sunrgbd_37_train = dict(
         seg_map_prefix='00',
         img_suffix='.jpg',
         seg_map_suffix='.png',
-        split=split_root + '/mseg-api/mseg/dataset_lists/sunrgbd-37-relabeled/list/train_mmseg.txt',
+        split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/sunrgbd-37-relabeled/list/train_mmseg.txt',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -424,7 +424,7 @@ sunrgbd_37_val=dict(
     seg_map_prefix='00',
     img_suffix='.jpg',
     seg_map_suffix='.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/sunrgbd-37-relabeled/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/sunrgbd-37-relabeled/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -452,7 +452,7 @@ camvid_11_test=dict(
     ann_dir='semseg11',
     img_suffix='.png',
     seg_map_suffix='_L.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/camvid-11/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/camvid-11/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -480,7 +480,7 @@ kitti_19_test=dict(
     ann_dir='training/label19',
     img_suffix='.png',
     seg_map_suffix='.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/kitti-19/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/kitti-19/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -508,7 +508,7 @@ pascal_context_60_test=dict(
     ann_dir='Segmentation_GT_60cls',
     img_suffix='.jpg',
     seg_map_suffix='.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/pascal-context-60/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/pascal-context-60/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -537,7 +537,7 @@ scannet_20_test=dict(
     ann_dir='',
     img_suffix='.jpg',
     seg_map_suffix='.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/scannet-20/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/scannet-20/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -566,7 +566,7 @@ voc2012_test=dict(
     ann_dir='SegmentationClassAug',
     img_suffix='.jpg',
     seg_map_suffix='.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/voc2012/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/voc2012/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
@@ -595,7 +595,7 @@ wilddash_19_test=dict(
     ann_dir='wd_val_19class',
     img_suffix='_100000.png',
     seg_map_suffix='_100000_labelIds.png',
-    split=split_root + '/mseg-api/mseg/dataset_lists/wilddash-19/list/val_mmseg.txt',
+    split=split_root + 'configs/gss/_base_/datasets/mseg_dataset_lists/wilddash-19/list/val_mmseg.txt',
     pipeline=[
         dict(type='LoadImageFromFile'),
         dict(type='LoadAnnotations', reduce_zero_label=False),
