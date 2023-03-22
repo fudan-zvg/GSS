@@ -1,5 +1,6 @@
+## Training
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
-#### Efficient latent posterior learning for $\mathcal{X}$ (will be released soon)
+### Latent posterior learning for $\mathcal{X}$ (will be released soon)
 The first stage is **posterior Learning**, where the actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
 
 ```bash
@@ -10,7 +11,7 @@ Please use the following script to validate the color assignments for each class
 bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
 ```
 
-#### Latent prior learning
+### Latent prior learning
 The pre-generated colors from latent posterior learning stage have already been provided in all configs.
 ```shell
 # train with 8 GPUs
@@ -18,3 +19,5 @@ bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscap
 # test with 8 GPUs
 bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./ckp_dir/iter_80000.pth 8 --eval mIoU
 ```
+
+### Latent posterior learning for $\mathcal{X}^{-1}$ (will be released soon)
