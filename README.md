@@ -174,6 +174,7 @@ This implementation is build upon [mmsegmentation](https://github.com/open-mmlab
 Our project is developed based on MMsegmentation. Please follow the official MMsegmentation INSTALL.md and getting_started.md for installation and dataset preparation.
 
 ### Pre-trained Models
+As stated in the paper, we utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and decoder. Please download the encoder and decoder weights using following command: 
 ```bash
 bash tools/download_pretrain_vqvae.sh
 ```
