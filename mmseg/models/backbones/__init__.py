@@ -20,18 +20,15 @@ from .swin_mask import SwinTransformerMask
 from .timm_backbone import TIMMBackbone
 from .twins import PCPVT, SVT
 from .unet import UNet
-from .vqt_v1 import VQTransformerV1
-from .vqt_v2 import VQTransformerV2
 from .vit import VisionTransformer
 from .none_backone import NoneBackbone
 
 __all__ = [
     'ResNet', 'ResNetV1c', 'ResNetV1d', 'ResNeXt', 'HRNet', 'FastSCNN',
     'ResNeSt', 'MobileNetV2', 'UNet', 'CGNet', 'MobileNetV3',
-    'VQTransformerV1', 'SwinTransformer', 'MixVisionTransformer',
+    'SwinTransformer', 'MixVisionTransformer',
     'BiSeNetV1', 'BiSeNetV2', 'ICNet', 'TIMMBackbone', 'ERFNet', 'PCPVT',
     'SVT', 'STDCNet', 'STDCContextPathNet', 'BEiT', 'MAE', 'VisionTransformer',
-    'VQTransformerV2',
     'NoneBackbone',
     'SwinTransformerMask',
 ]

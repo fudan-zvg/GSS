@@ -70,7 +70,7 @@ class GenerativeSegHeadFFSingleFusion(BaseDecodeHead):
         self.indice_seg_channel = indice_seg_channel if indice_seg_channel is not None else channels
         self.indice_cls_channel = indice_cls_channel
         self.d_vae = get_dalle_vae(
-            weight_path="/home/chenjiaqi/pj/mmsegmentation/ckp",
+            weight_path="ckp",
             device="cuda")
         for param in self.d_vae.parameters():
             param.requires_grad = False
