@@ -2,7 +2,7 @@
 from .compose import Compose
 from .formatting import (Collect, ImageToTensor, ToDataContainer, ToTensor,
                          Transpose, to_tensor)
-from .loading import LoadAnnotations, LoadImageFromFile, LoadDepthAnnotations, LoadDepthAnnotationsFromH5, LoadImageFromH5File
+from .loading import LoadAnnotations, LoadImageFromFile, LoadDepthAnnotations
 from .test_time_aug import MultiScaleFlipAug
 from .transforms import (CLAHE, AdjustGamma, Normalize, Pad,
                          PhotoMetricDistortion, RandomCrop, RandomCutOut,
@@ -17,5 +17,5 @@ __all__ = [
     'Normalize', 'SegRescale', 'PhotoMetricDistortion', 'RandomRotate',
     'AdjustGamma', 'CLAHE', 'Rerange', 'RGB2Gray', 'RandomCutOut',
     'RandomMosaic',
-    'ToUniversalLabel', 'LoadDepthAnnotations', 'LoadDepthAnnotationsFromH5', 'LoadImageFromH5File'
+    'ToUniversalLabel', 'LoadDepthAnnotations'
 ]

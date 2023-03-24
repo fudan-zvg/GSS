@@ -168,7 +168,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ## Get Started
 
 ### Prepare Environment
-This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./install.md) to prepare the environment and dataset preparation.
+This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./readme/INSTALL.md) to prepare the environment and dataset preparation.
 
 We utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and decoder. Please download the encoder and decoder weights using following command: 
 ```bash
