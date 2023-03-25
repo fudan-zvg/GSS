@@ -16,7 +16,7 @@ from torch.nn.modules.utils import _pair as to_2tuple
 from mmseg.utils import get_root_logger
 from ..builder import BACKBONES
 from ..utils import PatchEmbed
-from .vit_v1 import TransformerEncoderLayer as VisionTransformerEncoderLayer
+from .vit import TransformerEncoderLayer as VisionTransformerEncoderLayer
 
 try:
     from scipy import interpolate
