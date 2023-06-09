@@ -24,10 +24,10 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 ## TODO List
 
-- [ ] Upload model weights and DALL-E VQVAE weight
+- [x] Upload model weights and DALL-E VQVAE weight
 - [ ] Provide stage-1 training code and Maskige reconstruction code
 - [ ] Provide the illustration of the GSS-FF and GSS-FT-W (and more training details)
-- [ ] Complete install.md
+- [x] Complete install.md
 - [ ] Add dataset link
 
 ## Results
