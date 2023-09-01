@@ -22,14 +22,6 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 <!-- [IMAGE] -->
 ![GSS](figures/framework.png)
 
-## TODO List
-
-- [x] Upload model weights and DALL-E VQVAE weight
-- [ ] Provide stage-1 training code and Maskige reconstruction code
-- [ ] Provide the illustration of the GSS-FF and GSS-FT-W (and more training details)
-- [x] Complete install.md
-- [ ] Add dataset link
-
 ## Results
 <!-- [RESULTS] -->
 ### Cityscapes dataset
@@ -168,7 +160,10 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 ## Get Started
 
 ### Intall
-This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation), please follow the steps in [install.md](./readme/INSTALL.md) to prepare the environment and dataset preparation.
+This implementation is build upon [mmsegmentation](https://github.com/open-mmlab/mmsegmentation). please follow the steps in [INSTALL.md](./readme/INSTALL.md) to prepare the environment.
+
+## Data
+Please follow the steps in [DATA.md](./readme/DATA.md) to prepare the dataset.
 
 ### Train
 The training process is divided into three stages: 
