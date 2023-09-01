@@ -1,6 +1,31 @@
 # Dataset preparation
 It is recommended to symlink the dataset root to $MMSEGMENTATION/data. If your folder structure is different, you may need to change the corresponding paths in config files. 
 
+Data folder structure
+
+```none
+mmsegmentation
+├── mmseg
+├── tools
+├── configs
+├── data
+│   ├── cityscapes
+│   │   ├── leftImg8bit
+│   │   │   ├── train
+│   │   │   ├── val
+│   │   ├── gtFine
+│   │   │   ├── train
+│   │   │   ├── val
+│   ├── ade
+│   │   ├── ADEChallengeData2016
+│   │   │   ├── annotations
+│   │   │   │   ├── training
+│   │   │   │   ├── validation
+│   │   │   ├── images
+│   │   │   │   ├── training
+│   │   │   │   ├── validation
+```
+
 ## Cityscapes
 
 The data could be found [here](https://www.cityscapes-dataset.com/downloads/) after registration.
