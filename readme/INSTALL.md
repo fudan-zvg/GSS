@@ -48,7 +48,7 @@ pip3 install einops
 python mmseg/utils/collect_env.py
 ```
 
-6. Download the pre-trained VQVAE weights
+6. Download the DALL-E pre-trained VQVAE weights
 ```shell
 bash tools/download_pretrain_vqvae.sh
 ```
