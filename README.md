@@ -32,7 +32,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 ## Results
 <!-- [RESULTS] -->
-### Cityscapes
+### Cityscapes dataset
 
 <table><tbody>
 <!-- START TABLE -->
@@ -83,7 +83,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 </tbody></table>
 
-### ADE20K
+### ADE20K dataset
 
 <table><tbody>
 <!-- START TABLE -->
@@ -116,7 +116,7 @@ whilst achieving a new state of the art in the more challenging cross-domain set
 
 </tbody></table>
 
-### MSeg
+### MSeg dataset
 
 <table><tbody>
 <!-- START TABLE -->
@@ -176,9 +176,9 @@ bash tools/download_pretrain_vqvae.sh
 ```
 
 ### Train
-The training process is divided into 
+The training process is divided into three stages: 
 1. latent posterior learning of $\mathcal{X}$;
-2. latent prior learning; and
+2. latent prior learning;
 3. latent posterior learning of $\mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W).
 
 See [TRAIN.md](./readme/TRAIN.md) for more information.
