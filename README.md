@@ -174,6 +174,15 @@ We utilize the DALL-E pre-trained VQVAE weights and freeze both the encoder and 
 ```bash
 bash tools/download_pretrain_vqvae.sh
 ```
+
+### Train
+The training process is divided into 
+1. latent posterior learning of $\mathcal{X}$;
+2. latent prior learning; and
+3. latent posterior learning of $\mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W).
+
+See [TRAIN.md](./readme/TRAIN.md) for more information.
+
 ### Eval
 Please download the pre-trained model weights and put them in the `./<ckp_dir>` folder.
 We provide the following scripts to evaluate GSS. 
@@ -185,9 +194,6 @@ For example, to evaluate the GSS-FF model on Cityscapes dataset, run:
 # test with 8 GPUs
 bash tools/dist_test.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py ./<ckp_dir>/gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth 8 --eval mIoU
 ```
-
-### Train
-The training process is divided into 1. latent posterior learning of $\mathcal{X}$; 2. latent prior learning; and 3. latent posterior learning of $\mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W). See [TRAIN.md](./readme/TRAIN.md) for more information.
 
 ## Reference
 
