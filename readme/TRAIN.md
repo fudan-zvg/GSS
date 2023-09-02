@@ -48,9 +48,16 @@ model=dict(
 
 ### Latent prior learning
 The pre-generated colors from latent posterior learning stage have already been provided in all configs.
+
+```shell
+# train with 8 GPUs
+bash tools/dist_train.sh configs/gss/<dataset><gss-ff_config_file> <num_of_GPUs>
+```
+For example,
 ```shell
 # train with 8 GPUs
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 ```
-
-### Latent posterior learning for $\mathcal{X}^{-1}$ (will be released soon)
+After undergoing Latent prior learning, one can obtain the results of GSS-FF. The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
+### Latent posterior learning for $\mathcal{X}^{-1}$
+This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
