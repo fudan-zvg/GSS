@@ -22,8 +22,31 @@ After run the before command, you will get a list of 0-255 RGB values:
 [[10, 22, 26], [26, 12, 47], ..., [222, 220, 182]]
 # ------------- End --------------
 ```
+Then, paste this color list into the configuration file for DALL-E reconstruction (e.g., [configs/ade20k/dalle_reconstruction_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/dalle_reconstruction_ade20k.py))
 
-Please use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
+```python
+_base_ = [
+    './gss-ff_swin-l_512x512_160k_ade20k.py'
+]
+
+model=dict(
+    pretrained=None,
+    backbone=dict(
+        _delete_=True,
+        type='NoneBackbone'
+    ),
+    decode_head=dict(
+        reconstruction_eval=True
+        # add your own color list here
+        # ------- begin -------
+        # palette=[[10, 22, 26], [26, 12, 47], ..., [222, 220, 182]]
+        # ------- end ---------
+    ),
+)
+```
+
+Please use the following script to validate the color assignments for each class in your generated images. 
+
 ```bash
 # ADE20K
 bash tools/dist_test.sh configs/gss/ade20k/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
@@ -35,7 +58,9 @@ bash tools/dist_test.sh configs/gss/cityscapes/dalle_reconstruction_mseg.py ckp/
 bash tools/dist_test.sh configs/gss/mseg/dalle_reconstruction_mseg.py ckp/non_ckp.pth 8 --eval mIoU
 ```
 
-Then paste this color list into the configuration file (e.g. [configs/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py)). 
+If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. 
+
+After that, paste the final color list into the configuration file (e.g. [configs/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py)). 
 If the list does not have model=dict(...) , then you can just create one:
 ```python
 model=dict(decode_head=dict(palette=[[10, 22, 26], [26, 12, 47], ..., [222, 220, 182]]))
