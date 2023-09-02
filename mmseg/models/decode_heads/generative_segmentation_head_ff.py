@@ -85,6 +85,7 @@ class GenerativeSegHeadFF(BaseDecodeHead):
                     stride=1,
                     norm_cfg=self.norm_cfg,
                     act_cfg=self.act_cfg)
+        self.conv_before_seg.conv.weight = nn.Parameter(self.conv_before_seg.conv.weight.contiguous())
         self.conv_seg = nn.Conv2d(self.indice_cls_channel, self.vocab_size, kernel_size=1)
         self.conv_seg_pixel = nn.Conv2d(channels, self.num_classes, kernel_size=1)
         _, self.swin_ln = build_norm_layer(dict(type='LN'), self.indice_seg_channel)
@@ -181,13 +182,14 @@ class GenerativeSegHeadFF(BaseDecodeHead):
         inputs = self._transform_inputs(inputs)
         x = self.feature_aggregation(inputs)
         b, c, h, w = x.shape
-        x = x.flatten(2).transpose(1, 2)
+        x = x.flatten(2).transpose(1, 2)  # .contiguous()
         x, hw, x_down, hw_down = self.transformer_block(x, (h, w))
         x = self.swin_ln(x)
-        x = x.transpose(1, 2).view(b, c, h, w)
+        x = x.transpose(1, 2).view(b, c, h, w).contiguous()
         x_p = self.feature_aggregation_for_pixel(inputs)
         h_p, w_p = x_p.shape[-2:]
         x = self.conv_before_seg(x)
+        x = x.contiguous()
         vq_logits = self.forward(x).view(-1, self.vocab_size, h, w)
         pixel_logits = self.conv_seg_pixel(x_p).view(-1, self.num_classes, h_p, w_p)
         pixel_logits = F.interpolate(pixel_logits, size=(h * 8, w * 8), mode='bilinear')
