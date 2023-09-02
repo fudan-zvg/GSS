@@ -153,6 +153,7 @@ bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.
 ```
 
 3. **Evaluate GSS-FT**
+
 We can directly load the weights for evaluation.
 
 Take Cityscapes as example:
