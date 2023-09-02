@@ -54,10 +54,12 @@ class GenerativeSegHeadFF(BaseDecodeHead):
                  swin_num_head=16,
                  swin_depth=2,
                  swin_window_size=7,
+                 reconstruction_eval=False,
                  **kwargs):
         super(GenerativeSegHeadFF, self).__init__(init_cfg=init_cfg, input_transform='multiple_select', channels=channels, **kwargs)
         num_inputs = len(self.in_channels)
         assert num_inputs == len(self.in_index)
+        self.reconstruction_eval = reconstruction_eval
         self.channels = channels
         self.palette = torch.tensor(palette)
         self.interpolate_mode = interpolate_mode
@@ -231,7 +233,8 @@ class GenerativeSegHeadFF(BaseDecodeHead):
         return losses
 
     def forward_test(self, inputs, img_metas, gt_semantic_seg, test_cfg):
-        # return self._forward_test_recon_with_dalle(gt_semantic_seg, img_metas)
+        if self.reconstruction_eval:
+            return self._forward_test_recon_with_dalle(gt_semantic_seg, img_metas)
         inputs = self._transform_inputs(inputs)
         x = self.feature_aggregation(inputs)
         b, c, h, w = x.shape
