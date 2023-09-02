@@ -182,7 +182,7 @@ class GenerativeSegHeadFF(BaseDecodeHead):
         inputs = self._transform_inputs(inputs)
         x = self.feature_aggregation(inputs)
         b, c, h, w = x.shape
-        x = x.flatten(2).transpose(1, 2)  # .contiguous()
+        x = x.flatten(2).transpose(1, 2)
         x, hw, x_down, hw_down = self.transformer_block(x, (h, w))
         x = self.swin_ln(x)
         x = x.transpose(1, 2).view(b, c, h, w).contiguous()
