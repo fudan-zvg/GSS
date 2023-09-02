@@ -61,3 +61,24 @@ bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscap
 After undergoing Latent prior learning, one can obtain the results of GSS-FF. The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
 ### Latent posterior learning for $\mathcal{X}^{-1}$
 This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
+
+1. Load the pre-trained weight of image encoder
+
+From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper.
+
+2. Train $\mathcal{X}^{-1}$ module
+   
+Please run the following command:
+```bash
+bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs>
+```
+$\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
+
+3. Assemble the weight of GSS-FT
+   
+Initially, we must assemble the weights of the Image encoder with those of $\mathcal{X}^{-1}$.
+```bash
+```
+Subsequently, we can directly load the assembled weights for evaluation.
+```bash
+```
