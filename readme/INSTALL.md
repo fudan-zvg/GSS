@@ -25,6 +25,7 @@ pip3 install mmcv-full==1.3.18 -f https://download.openmmlab.com/mmcv/dist/cu111
 pip3 install DALL-E
 pip3 install einops==0.6.1
 pip3 install attrs==23.1.0
+pip install future tensorboard
 ```
 
 3. Install MSeg
