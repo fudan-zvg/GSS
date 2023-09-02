@@ -24,6 +24,20 @@ mmsegmentation
 │   │   │   ├── images
 │   │   │   │   ├── training
 │   │   │   │   ├── validation
+│   ├── mseg_dataset
+│   │   ├── ADE20K
+│   │   ├── Cityscapes
+│   │   ├── KITTI
+│   │   ├── PASCAL_VOC_2012
+│   │   ├── WildDash
+│   │   ├── BDD
+│   │   ├── COCOPanoptic
+│   │   ├── MapillaryVistasPublic
+│   │   ├── ScanNet
+│   │   ├── Camvid
+│   │   ├── IDD
+│   │   ├── PASCAL_Context
+│   │   ├── SUNRGBD           
 ```
 
 ## Cityscapes
@@ -44,6 +58,6 @@ The training and validation set of ADE20K could be download from this [link](htt
 We may also download test set from [here](http://data.csail.mit.edu/places/ADEchallenge/release_test.zip).
 
 ## MSeg
-
-Will come soon.
+Please follow 
+[MSeg download instruction](https://github.com/mseg-dataset/mseg-api/blob/master/download_scripts/README.md) to download MSeg dataset
 
