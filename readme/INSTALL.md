@@ -50,6 +50,7 @@ python mmseg/utils/collect_env.py
 ```
 
 ## Download the DALL-E pre-trained VQVAE weights
+Please run the following command:
 ```shell
 bash tools/download_pretrain_vqvae.sh
 ```
