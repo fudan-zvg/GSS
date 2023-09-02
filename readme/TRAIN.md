@@ -134,13 +134,13 @@ Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and c
 
 For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
-# train GSS-FT model with noisy prediction
+# train with noisy prediction
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss_ft_cityscapes_swin_init.pth
 ```
 
 For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
 ```bash
-# train GSS-FT model with noisy prediction
+# train with noisy prediction
 bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss_ft_ade20k_swin_init.pth
 # merge checkpoints
 python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
@@ -148,7 +148,7 @@ python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ad
 
 For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
 ```bash
-# train GSS-FT model with noisy prediction
+# train with noisy prediction
 bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss_ft_mseg_swin_init.pth
 ```
 
