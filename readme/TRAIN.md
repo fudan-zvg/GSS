@@ -120,8 +120,10 @@ bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_512x512_160k_40k
    
 Initially, we must assemble the weights of the Image encoder with those of $\mathcal{X}^{-1}$.
 ```bash
+python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_768x768_80k_cityscapes/iter_80000.pth --post_model_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_80k_40k_cityscapes.pth --backbone_type swin
 ```
 
 Subsequently, we can directly load the assembled weights for evaluation.
 ```bash
+
 ```
