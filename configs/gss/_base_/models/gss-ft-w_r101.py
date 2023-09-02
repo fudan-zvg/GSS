@@ -1,6 +1,7 @@
+find_unused_parameters=True
 model = dict(
     type='EncoderDecoder',
-    pretrained='open-mmlab://resnet101_v1c',
+    pretrained=None,
     backbone=dict(
         type='ResNetV1c',
         depth=101,

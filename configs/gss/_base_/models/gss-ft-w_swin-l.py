@@ -1,3 +1,4 @@
+find_unused_parameters=True
 model = dict(
     type='EncoderDecoder',
     pretrained=None,
@@ -21,11 +22,7 @@ model = dict(
         use_abs_pos_embed=False,
         act_cfg=dict(type='GELU'),
         norm_cfg=dict(type='LN', requires_grad=True),
-        init_cfg=dict(
-            type='Pretrained',
-            checkpoint=
-            'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth'
-        ),
+        init_cfg=None,
         with_cp=False,
         frozen_stages=4),
     decode_head=dict(

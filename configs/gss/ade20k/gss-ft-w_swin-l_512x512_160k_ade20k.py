@@ -4,10 +4,12 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-model=dict(decode_head=dict(post_swin_depth=2))
+model=dict(
+    backbone=dict(init_cfg=None),
+    decode_head=dict(post_swin_depth=2))
 data = dict(samples_per_gpu=2)
 
-load_from = 'work_dirs/bigseg_ade20k_conns_swin_160k_025_dim_768_2048_wo_cpm_bs4x8_transformer/iter_32000.pth'
+# load_from = 'work_dirs/bigseg_ade20k_conns_swin_160k_025_dim_768_2048_wo_cpm_bs4x8_transformer/iter_32000.pth'
 
 optimizer = dict(
     type='AdamW',

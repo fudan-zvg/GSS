@@ -90,14 +90,14 @@ class GenerativeSegHeadFTW(GenerativeSegHeadFF):
             inputs = self._transform_inputs(inputs)
             x = self.feature_aggregation(inputs)
             b, c, h, w = x.shape
-            x = x.flatten(2).transpose(1, 2)
+            x = x.flatten(2).transpose(1, 2).contiguous()
             x, hw, x_down, hw_down = self.transformer_block(x, (h, w))
             x = self.swin_ln(x)
-            x = x.transpose(1, 2).view(b, c, h, w)
+            x = x.transpose(1, 2).view(b, c, h, w).contiguous()
             x = self.conv_before_seg(x)
-            vq_logits = self.forward(x).view(-1, self.vocab_size, h, w)
+            vq_logits = self.forward(x).view(-1, self.vocab_size, h, w).contiguous()
             # get the pixel-wise prediction from indice prediction
-            pixel_segmap_from_indice_pred = self.d_vae.decode(vq_logits.argmax(1).unsqueeze(1), img_size=[h, w])
+            pixel_segmap_from_indice_pred = self.d_vae.decode(vq_logits.argmax(1).unsqueeze(1), img_size=[h, w]).contiguous()
             pixel_segmap_from_indice_pred = unmap_pixels(torch.sigmoid(pixel_segmap_from_indice_pred[:, :3]))
         b, c, h, w = pixel_segmap_from_indice_pred.shape
         x = self.projection(pixel_segmap_from_indice_pred)

@@ -1,10 +1,12 @@
+find_unused_parameters=True
 model = dict(
     type='MultiDomainEncoderDecoder',
-    pretrained='open-mmlab://msra/hrnetv2_w48',
+    pretrained=None,
     backbone=dict(
         type='HRNet',
         norm_cfg=dict(type='SyncBN', requires_grad=True),
         norm_eval=False,
+        frozen_stages=4,
         extra=dict(
             stage1=dict(
                 num_modules=1,

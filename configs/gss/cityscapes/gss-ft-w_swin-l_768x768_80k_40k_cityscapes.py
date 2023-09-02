@@ -17,7 +17,9 @@ model = dict(
                  [0, 0, 0]]),
     test_cfg=dict(mode='slide', crop_size=(768, 768), stride=(512, 512)))
 
-load_from = 'work_dirs/bigseg_cityscapes_conns_swin_160k_025_dim_768_2048_wo_cpm_bs2x16_transformer_right_color_lr/iter_160000.pth'
+data = dict(samples_per_gpu=1, workers_per_gpu=2)
+
+# load_from = 'work_dirs/bigseg_cityscapes_conns_swin_160k_025_dim_768_2048_wo_cpm_bs2x16_transformer_right_color_lr/iter_160000.pth'
 
 optimizer = dict(
     type='AdamW',
