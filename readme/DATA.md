@@ -1,5 +1,5 @@
 # Dataset preparation
-It is recommended to symlink the dataset root to $GSS/data. If your folder structure is different, you may need to change the corresponding paths in config files. 
+We recommend creating a symlink for your dataset root at $GSS/data. If your directory structure varies, please adjust the relevant paths in the configuration files for proper alignment.
 
 **Data folder structure**
 
