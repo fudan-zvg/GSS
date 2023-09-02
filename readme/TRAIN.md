@@ -78,37 +78,50 @@ Additionally, we provide initialization weights, which can be downloaded to repr
 
  <tr><td align="left">Cityscapes</td>
 <td align="center">Swin-L</td>
+<td align="center">32k/160k</td>
+<td align="center"><a href="">google drive</a></td>
+</tr>
+
+<tr><td align="left">ADE20K</td>
+<td align="center">Swin-L</td>
+<td align="center">32k/160k</td>
+<td align="center"><a href="">google drive</a></td>
+</tr>
+
+<tr><td align="left">MSeg</td>
+<td align="center">Swin-L</td>
 <td align="center">160k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1riNfPpzc_6XaCzcNuzqZaRYakO_8aItG?usp=sharing">google drive</a></td>
-</tr>
-
- <tr><td align="left">ADE20K</td>
-<td align="center">Swin-L</td>
-<td align="center">32k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1BTvchDJtUk4rRJ0qK2rcApbHEAEK1bEZ?usp=sharing">google drive</a></td>
-</tr>
-
- <tr><td align="left">MSeg</td>
-<td align="center">Swin-L</td>
-<td align="center">32k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1HDeewsE6E9oLZ9ROCH7KgAHaAZeSUj95?usp=sharing">google drive</a></td>
+<td align="center"><a href="">google drive</a></td>
 </tr>
 
 </tbody></table>
 
 2. **Train $\mathcal{X}^{-1}$ module**
-   
-Please run the following command:
+
+
+Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
+
+For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
-bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs>
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss_ft_cityscapes_swin_init.pth
 ```
-$\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
+
+For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
+```bash
+bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss_ft_ade20k_swin_init.pth
+```
+
+For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
+```bash
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss_ft_mseg_swin_init.pth
+```
 
 3. **Assemble the weight of GSS-FT**
    
 Initially, we must assemble the weights of the Image encoder with those of $\mathcal{X}^{-1}$.
 ```bash
 ```
+
 Subsequently, we can directly load the assembled weights for evaluation.
 ```bash
 ```
