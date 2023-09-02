@@ -42,7 +42,6 @@ cd ..
 git clone git@github.com:fudan-zvg/GSS.git
 cd GSS/
 pip install -e .
-pip3 install einops
 ```
 
 5. Check the installation
@@ -50,7 +49,7 @@ pip3 install einops
 python mmseg/utils/collect_env.py
 ```
 
-6. Download the DALL-E pre-trained VQVAE weights
+## Download the DALL-E pre-trained VQVAE weights
 ```shell
 bash tools/download_pretrain_vqvae.sh
 ```
