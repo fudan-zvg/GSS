@@ -1,9 +1,9 @@
 ## Training
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
-### Step 0: Latent posterior learning for $\mathcal{X}$ (optional)
-> Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to Latent prior learning to reproduce the results.
+### Step 0: Latent posterior learning for $\mathcal{X}$ (Optional)
+> Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to next step (Latent prior learning) to reproduce the results.
 
-The first stage is **posterior Learning**, where the actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
+The actual task Latent posterior learning for $\mathcal{X}$ performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To conduct this stage, please execute the following command:
 
 For ADE20K dataset, you can run the following command:
 ```bash
@@ -15,14 +15,14 @@ python tools/posterior_learning.py --dataset mseg
 ```
 For Cityscapes dataset, you don't need to generate color for each category, as we directlly use the deflaut visualization color of Cityscapes.
 
-After run the before command, you will get a list of 0-255 RGB values:
+After running above command, you will get a list of 0-255 RGB values:
 
 ```python
 # -----------  Begin  ------------
 [[10, 22, 26], [26, 12, 47], ..., [222, 220, 182]]
 # ------------- End --------------
 ```
-Then, paste this color list into the configuration file for DALL-E reconstruction (e.g., [configs/ade20k/dalle_reconstruction_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/dalle_reconstruction_ade20k.py))
+Then, paste above color list into the configuration file for DALL-E reconstruction (e.g., [configs/ade20k/dalle_reconstruction_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/dalle_reconstruction_ade20k.py))
 
 ```python
 _base_ = [
@@ -79,7 +79,10 @@ model=dict(
 ```
 
 ### Step 1: Latent prior learning (Train GSS-FF)
-The pre-generated colors from latent posterior learning stage have already been provided in all configs.
+
+> **GSS-FF:** The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
+> 
+> The pre-generated colors have already been provided in all configs. Thus, it's fine to start from step 1.
 
 ```shell
 # train GSS-FF model with 8 GPUs
@@ -90,9 +93,10 @@ For example,
 # train GSS-FF model on Cityscapes with 8 GPUs
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 ```
-After undergoing Latent prior learning, one can obtain the results of GSS-FF. The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
+After undergoing Latent prior learning, one can obtain the results of GSS-FF.
 ### Step 2: Latent posterior learning for $\mathcal{X}^{-1}$ (Train GSS-FT)
-This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
+
+> This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
 
 1. **Load the pre-trained weight of image encoder**
 
