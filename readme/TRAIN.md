@@ -62,11 +62,41 @@ After undergoing Latent prior learning, one can obtain the results of GSS-FF. Th
 ### Latent posterior learning for $\mathcal{X}^{-1}$
 This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
 
-1. Load the pre-trained weight of image encoder
+1. **Load the pre-trained weight of image encoder**
 
-From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper.
+From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. 
 
-2. Train $\mathcal{X}^{-1}$ module
+Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper.
+
+<table><tbody>
+<!-- START TABLE -->
+<!-- TABLE HEADER -->
+<th valign="bottom">Dataset</th>
+<th valign="bottom">Backbone</th>
+<th valign="bottom">Iterations/Max iterations</th>
+<th valign="bottom">Initial checkpoint</th>
+
+ <tr><td align="left">Cityscapes</td>
+<td align="center">Swin-L</td>
+<td align="center">160k/160k</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1riNfPpzc_6XaCzcNuzqZaRYakO_8aItG?usp=sharing">google drive</a></td>
+</tr>
+
+ <tr><td align="left">ADE20K</td>
+<td align="center">Swin-L</td>
+<td align="center">32k/160k</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1BTvchDJtUk4rRJ0qK2rcApbHEAEK1bEZ?usp=sharing">google drive</a></td>
+</tr>
+
+ <tr><td align="left">MSeg</td>
+<td align="center">Swin-L</td>
+<td align="center">32k/160k</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1HDeewsE6E9oLZ9ROCH7KgAHaAZeSUj95?usp=sharing">google drive</a></td>
+</tr>
+
+</tbody></table>
+
+2. **Train $\mathcal{X}^{-1}$ module**
    
 Please run the following command:
 ```bash
@@ -74,7 +104,7 @@ bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs
 ```
 $\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
 
-3. Assemble the weight of GSS-FT
+3. **Assemble the weight of GSS-FT**
    
 Initially, we must assemble the weights of the Image encoder with those of $\mathcal{X}^{-1}$.
 ```bash
