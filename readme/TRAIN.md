@@ -25,7 +25,14 @@ After run the before command, you will get a list of 0-255 RGB values:
 
 Please use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
 ```bash
-bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
+# ADE20K
+bash tools/dist_test.sh configs/gss/ade20k/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
+
+# MSeg
+bash tools/dist_test.sh configs/gss/mseg/dalle_reconstruction_mseg.py ckp/non_ckp.pth 8 --eval mIoU
+
+# Cityscapes
+bash tools/dist_test.sh configs/gss/cityscapes/dalle_reconstruction_mseg.py ckp/non_ckp.pth 8 --eval mIoU
 ```
 
 Then paste this color list into the configuration file (e.g. [configs/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py)). 
