@@ -1,6 +1,6 @@
 ## Training
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
-### Latent posterior learning for $\mathcal{X}$ (optional)
+### Step 0: Latent posterior learning for $\mathcal{X}$ (optional)
 > Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to Latent prior learning to reproduce the results.
 
 The first stage is **posterior Learning**, where the actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
@@ -78,7 +78,7 @@ model=dict(
 )
 ```
 
-### Latent prior learning
+### Step 1: Latent prior learning (Train GSS-FF)
 The pre-generated colors from latent posterior learning stage have already been provided in all configs.
 
 ```shell
@@ -91,7 +91,7 @@ For example,
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 ```
 After undergoing Latent prior learning, one can obtain the results of GSS-FF. The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
-### Latent posterior learning for $\mathcal{X}^{-1}$
+### Step 2: Latent posterior learning for $\mathcal{X}^{-1} (Train GSS-FT)$
 This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
 
 1. **Load the pre-trained weight of image encoder**
