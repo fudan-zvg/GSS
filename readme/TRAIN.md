@@ -1,7 +1,7 @@
 ## Training
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
 ### Latent posterior learning for $\mathcal{X}$ (optional)
-Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to step two to reproduce the results.
+> Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to Latent prior learning to reproduce the results.
 
 The first stage is **posterior Learning**, where the actual task performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To run this stage, please execute the following command:
 
