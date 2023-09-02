@@ -82,23 +82,23 @@ model=dict(
 The pre-generated colors from latent posterior learning stage have already been provided in all configs.
 
 ```shell
-# train with 8 GPUs
+# train GSS-FF model with 8 GPUs
 bash tools/dist_train.sh configs/gss/<dataset><gss-ff_config_file> <num_of_GPUs>
 ```
 For example,
 ```shell
-# train with 8 GPUs
+# train GSS-FF model on Cityscapes with 8 GPUs
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 ```
 After undergoing Latent prior learning, one can obtain the results of GSS-FF. The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
-### Step 2: Latent posterior learning for $\mathcal{X}^{-1} (Train GSS-FT)$
+### Step 2: Latent posterior learning for $\mathcal{X}^{-1}$ (Train GSS-FT)
 This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
 
 1. **Load the pre-trained weight of image encoder**
 
 From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. 
 
-Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper.
+Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper. You can download them and save in $GSS/ckp/ .
 
 <table><tbody>
 <!-- START TABLE -->
@@ -134,19 +134,21 @@ Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and c
 
 For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
+# train GSS-FT model with noisy prediction
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss_ft_cityscapes_swin_init.pth
 ```
 
 For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
 ```bash
-# train with noisy prediction
+# train GSS-FT model with noisy prediction
 bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss_ft_ade20k_swin_init.pth
-# merge checkpoint
+# merge checkpoints
 python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
 ```
 
 For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
 ```bash
+# train GSS-FT model with noisy prediction
 bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss_ft_mseg_swin_init.pth
 ```
 
