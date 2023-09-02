@@ -125,5 +125,5 @@ python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_768x768_80k_cit
 
 Subsequently, we can directly load the assembled weights for evaluation.
 ```bash
-
+bash tools/dist_test.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_80k_40k_cityscapes.pth 8 --eval mIoU
 ```
