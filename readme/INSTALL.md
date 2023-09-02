@@ -21,8 +21,12 @@ conda activate gss
 2. Install pytorch, mmcv, DALL-E
 ```shell
 pip3 install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
-pip install mmcv-full==1.3.18 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.9.0/index.html
-pip install DALL-E
+pip3 install mmcv-full==1.3.18 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.9.0/index.html
+pip3 install DALL-E
+pip3 install einops==0.6.1
+pip3 install attrs==23.1.0
+pip3 install future tensorboard
+pip3 install setuptools==59.5.0
 ```
 
 3. Install MSeg
@@ -34,6 +38,7 @@ pip install -e .
 
 4. Install GSS
 ```shell
+cd ..
 git clone git@github.com:fudan-zvg/GSS.git
 cd GSS/
 pip install -e .
@@ -44,7 +49,8 @@ pip install -e .
 python mmseg/utils/collect_env.py
 ```
 
-6. Download the pre-trained VQVAE weights
+## Download the DALL-E pre-trained VQVAE weights
+Please run the following command:
 ```shell
 bash tools/download_pretrain_vqvae.sh
 ```
