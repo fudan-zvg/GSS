@@ -25,7 +25,14 @@ After run the before command, you will get a list of 0-255 RGB values:
 
 Please use the following script to validate the color assignments for each class in your generated images. If you notice that the Intersection over Union (IoU) score for a particular class is unusually low, it may be because the assigned color for that class is too similar to the colors assigned to other classes. In such cases, you can modify the color values for that class and re-run the eval command until you are satisfied with the results. The eval command is as follows:
 ```bash
-bash tools/dist_test.sh configs/gss/posterior_learning/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
+# ADE20K
+bash tools/dist_test.sh configs/gss/ade20k/dalle_reconstruction_ade20k.py ckp/non_ckp.pth 8 --eval mIoU
+
+# MSeg
+bash tools/dist_test.sh configs/gss/mseg/dalle_reconstruction_mseg.py ckp/non_ckp.pth 8 --eval mIoU
+
+# Cityscapes
+bash tools/dist_test.sh configs/gss/cityscapes/dalle_reconstruction_mseg.py ckp/non_ckp.pth 8 --eval mIoU
 ```
 
 Then paste this color list into the configuration file (e.g. [configs/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py](https://github.com/fudan-zvg/GSS/blob/gss/configs/gss/ade20k/gss-ff_swin-l_512x512_160k_ade20k.py)). 
@@ -78,37 +85,50 @@ Additionally, we provide initialization weights, which can be downloaded to repr
 
  <tr><td align="left">Cityscapes</td>
 <td align="center">Swin-L</td>
-<td align="center">160k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1riNfPpzc_6XaCzcNuzqZaRYakO_8aItG?usp=sharing">google drive</a></td>
-</tr>
-
- <tr><td align="left">ADE20K</td>
-<td align="center">Swin-L</td>
-<td align="center">32k/160k</td>
+<td align="center">80k/80k</td>
 <td align="center"><a href="https://drive.google.com/drive/folders/1BTvchDJtUk4rRJ0qK2rcApbHEAEK1bEZ?usp=sharing">google drive</a></td>
 </tr>
 
- <tr><td align="left">MSeg</td>
+<tr><td align="left">ADE20K</td>
 <td align="center">Swin-L</td>
 <td align="center">32k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1HDeewsE6E9oLZ9ROCH7KgAHaAZeSUj95?usp=sharing">google drive</a></td>
+<td align="center"><a href="https://drive.google.com/drive/folders/159NKXbzPa8zk9e_DCpRTY7L9VKTowLZf?usp=sharing">google drive</a></td>
+</tr>
+
+<tr><td align="left">MSeg</td>
+<td align="center">Swin-L</td>
+<td align="center">160k/160k</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1br9IAcOHXkJsPoG0DBEwkN97U5V5liEZ?usp=sharing">google drive</a></td>
 </tr>
 
 </tbody></table>
 
 2. **Train $\mathcal{X}^{-1}$ module**
-   
-Please run the following command:
-```bash
-bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs>
-```
-$\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
 
-3. **Assemble the weight of GSS-FT**
-   
-Initially, we must assemble the weights of the Image encoder with those of $\mathcal{X}^{-1}$.
+Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
+
+For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss_ft_cityscapes_swin_init.pth
 ```
-Subsequently, we can directly load the assembled weights for evaluation.
+
+For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
 ```bash
+# train with noisy prediction
+bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss_ft_ade20k_swin_init.pth
+# merge checkpoint
+python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
+```
+
+For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
+```bash
+bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss_ft_mseg_swin_init.pth
+```
+
+3. **Evaluate GSS-FT**
+We can directly load the weights for evaluation.
+
+Take Cityscapes as example:
+```bash
+bash tools/dist_test.sh configs/gss/mseg/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_80k_40k_cityscapes.pth 8 --eval mIoU
 ```
