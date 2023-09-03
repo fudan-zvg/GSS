@@ -168,8 +168,8 @@ Please follow the steps in [DATA.md](./readme/DATA.md) to prepare the dataset.
 ### Train
 The training process is divided into three stages: 
 1. latent posterior learning of $\mathcal{X}$;
-2. latent prior learning;
-3. latent posterior learning of $\mathcal{X}^{-1}$ (this process is only needed by GSS-FT-W).
+2. latent prior learning (Train GSS-FF);
+3. latent posterior learning of $\mathcal{X}^{-1}$ (Train GSS-FT-W).
 
 See [TRAIN.md](./readme/TRAIN.md) for more information.
 
