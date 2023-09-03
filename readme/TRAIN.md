@@ -158,7 +158,7 @@ If the GSS-FF checkpoint you are does is at intermediate iteraction (e.g. 32k it
 ```bash
 python merge_checkpoints.py --model_path <gss-ff_checkpoint> --post_model_path <X^{-1}_checkpoint> --target_path <gss-ft_checkpoint> --backbone_type <backbone_name>
 ```
-Take the GSS-FT on Cityscapes as an example: 
+Take the GSS-FT on ADE20K as an example: 
 ```bash
 python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
 ```
