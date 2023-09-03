@@ -1,6 +1,6 @@
 ## Training
 Since the pre-generated colors have already been provided, you can directly proceed to Latent prior learning stage.
-### Step 0: Latent posterior learning for $\mathcal{X}$ (Optional)
+### Step 1: Latent posterior learning for $\mathcal{X}$ (Optional)
 > Note that we've carefully prepared the $\mathcal{X}$, so you can go straight to next step (Latent prior learning) to reproduce the results.
 
 The actual task Latent posterior learning for $\mathcal{X}$ performed is assigning a unique color to each semantic category. We propose using the **Maximal distance assumption** to ensure that the colors of different categories are not easily confused. To conduct this stage, please execute the following command:
@@ -78,7 +78,7 @@ model=dict(
 )
 ```
 
-### Step 1: Latent prior learning (Train GSS-FF)
+### Step 2: Latent prior learning (Train GSS-FF)
 
 > **GSS-FF:** The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'F' signifies that $\mathcal{X}^{-1}$ is also training-free.
 > 
@@ -94,7 +94,7 @@ For example,
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscapes.py 8
 ```
 After undergoing Latent prior learning, one can obtain the results of GSS-FF.
-### Step 2: Latent posterior learning for $\mathcal{X}^{-1}$ (Train GSS-FT)
+### Step 3: Latent posterior learning for $\mathcal{X}^{-1}$ (Train GSS-FT)
 
 > **GSS-FT:** The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'T' signifies that $\mathcal{X}^{-1}$ is a learnable block (in practice, a swin block) which requirs training for each dataset.
 >
@@ -102,7 +102,7 @@ After undergoing Latent prior learning, one can obtain the results of GSS-FF.
 
 1. **Load the pre-trained weight of image encoder**
 
-From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. 
+From the Latent prior learning phase, we can utilize the final checkpoint or intermediate checkpoint (e.g., 32k iterations) obtained as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. 
 
 For your convenience, we provide initialization weights. You can download them and save in `$GSS/ckp/` .
 
@@ -139,20 +139,26 @@ For your convenience, we provide initialization weights. You can download them a
 Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
 
 ```bash
-bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs> --load-from <gss-ff-checkpoint>
+bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs> --load-from <gss-ff_checkpoint>
 ```
 
-For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
+Here are some examples:
 ```bash
+# Train $\mathcal{X}^{-1}$ on Cityscaeps
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth
-```
 
-For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
-```bash
+# Train $\mathcal{X}^{-1}$ on ADE20K
 bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_ade20k_iter_160000.pth
+
+# Trian $\mathcal{X}^{-1}$ on MSeg
+bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_mseg_iter_160000.pth
 ```
 
-For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
+If the GSS-FF checkpoint you are does is at intermediate iteraction (e.g. 32k iteration), it is imperative to concatenate the weights of GSS-FF from the final iteration with the weights of $\mathcal{X}^{-1}$ to obtain the ultimate model weights.
 ```bash
-bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_mseg_iter_160000.pth
+python merge_checkpoints.py --model_path <gss-ff_checkpoint> --post_model_path <X^{-1}_checkpoint> --target_path <gss-ft_checkpoint> --backbone_type <backbone_name>
+```
+Take the GSS-FT on Cityscapes as an example: 
+```bash
+python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
 ```
