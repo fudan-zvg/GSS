@@ -96,13 +96,15 @@ bash tools/dist_train.sh configs/gss/cityscapes/gss-ff_r101_768x768_80k_cityscap
 After undergoing Latent prior learning, one can obtain the results of GSS-FF.
 ### Step 2: Latent posterior learning for $\mathcal{X}^{-1}$ (Train GSS-FT)
 
-> This stage is specifically designed for GSS-FT, where $\mathcal{X}^{-1}$ is a learnable module that requires training. During this stage, we load and freeze the pre-trained image encoder from Latent prior learning stage, focusing solely on training $\mathcal{X}^{-1}$.
+> **GSS-FT:** The first 'F' indicates that $\mathcal{X}$ is training-free, while the second 'T' signifies that $\mathcal{X}^{-1}$ is a learnable block (in practice, a swin block) which requirs training for each dataset.
+>
+> Through this stage of training, you can obtain the GSS-FT.
 
 1. **Load the pre-trained weight of image encoder**
 
 From the Latent prior learning phase, one can utilize the intermediate checkpoint obtained (e.g., at 32k iterations) as the pre-trained image encoder weight. This weight can then be loaded into the model to commence the training of $\mathcal{X}^{-1}$. 
 
-Additionally, we provide initialization weights, which can be downloaded to reproduce the results presented in the paper. You can download them and save in $GSS/ckp/ .
+For your convenience, we provide initialization weights. You can download them and save in `$GSS/ckp/` .
 
 <table><tbody>
 <!-- START TABLE -->
@@ -136,6 +138,10 @@ Additionally, we provide initialization weights, which can be downloaded to repr
 
 Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and can then be applied to various image encoders, thereby conserving significant training resources.
 
+```bash
+bash tools/dist_train.sh configs/gss/<dataset>/<gss-ft_config_file> <num_of_GPUs> --load-from <gss-ff-checkpoint>
+```
+
 For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
 bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth
@@ -149,13 +155,4 @@ bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.
 For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
 ```bash
 bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_mseg_iter_160000.pth
-```
-
-3. **Evaluate GSS-FT**
-
-We can directly load the weights for evaluation.
-
-Take Cityscapes as example:
-```bash
-bash tools/dist_test.sh configs/gss/mseg/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_80k_40k_cityscapes.pth 8 --eval mIoU
 ```
