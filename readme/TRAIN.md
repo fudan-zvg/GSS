@@ -109,25 +109,25 @@ Additionally, we provide initialization weights, which can be downloaded to repr
 <!-- TABLE HEADER -->
 <th valign="bottom">Dataset</th>
 <th valign="bottom">Backbone</th>
-<th valign="bottom">Iterations/Max iterations</th>
 <th valign="bottom">Initial checkpoint</th>
-
- <tr><td align="left">Cityscapes</td>
+<th valign="bottom">model name</th>
+    
+<tr><td align="left">Cityscapes</td>
 <td align="center">Swin-L</td>
-<td align="center">80k/80k</td>
+<td align="center">gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth</td>
 <td align="center"><a href="https://drive.google.com/drive/folders/1BTvchDJtUk4rRJ0qK2rcApbHEAEK1bEZ?usp=sharing">google drive</a></td>
 </tr>
 
 <tr><td align="left">ADE20K</td>
 <td align="center">Swin-L</td>
-<td align="center">32k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/159NKXbzPa8zk9e_DCpRTY7L9VKTowLZf?usp=sharing">google drive</a></td>
+<td align="center">gss-ff_swin-l_512x512_160k_ade20k_iter_160000.pth</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1OnzGL5szxYlUnv2zmAkdw-mA-3pTNo_w?usp=sharing">google drive</a></td>
 </tr>
 
 <tr><td align="left">MSeg</td>
 <td align="center">Swin-L</td>
-<td align="center">160k/160k</td>
-<td align="center"><a href="https://drive.google.com/drive/folders/1br9IAcOHXkJsPoG0DBEwkN97U5V5liEZ?usp=sharing">google drive</a></td>
+<td align="center">gss-ff_swin-l_512x512_160k_mseg_iter_160000.pth</td>
+<td align="center"><a href="https://drive.google.com/drive/folders/1br9IAcOHXkJsPoG0DBEwkN97U5V5liEZ?usp=drive_link">google drive</a></td>
 </tr>
 
 </tbody></table>
@@ -138,22 +138,17 @@ Note that, $\mathcal{X}^{-1}$ requires training only once for each dataset and c
 
 For the $\mathcal{X}^{-1}$ of Cityscaeps, please run the following command:
 ```bash
-# train with noisy prediction
-bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss_ft_cityscapes_swin_init.pth
+bash tools/dist_train.sh configs/gss/cityscapes/gss-ft-w_swin-l_768x768_80k_40k_cityscapes.py 8 --load-from ckp/gss-ff_swin-l_768x768_80k_cityscapes_iter_80000.pth
 ```
 
 For the $\mathcal{X}^{-1}$ of ADE20K, please run the following command:
 ```bash
-# train with noisy prediction
-bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss_ft_ade20k_swin_init.pth
-# merge checkpoints
-python merge_checkpoints.py --model_path work_dirs/gss-ff_swin-l_512x512_160k_ade20k/iter_160000.pth --post_model_path work_dirs/gss-ft-w_swin-l_512x512_160k_ade20k/iter_40000.pth --target_path work_dirs/gss-ft-w_swin-l_768x768_80k_40k_cityscapes/gss-ft_160k_40k_ade20k.pth --backbone_type swin
+bash tools/dist_train.sh configs/gss/ade20k/gss-ft-w_swin-l_512x512_160k_ade20k.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_ade20k_iter_160000.pth
 ```
 
 For the $\mathcal{X}^{-1}$ of MSeg, please run the following command:
 ```bash
-# train with noisy prediction
-bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss_ft_mseg_swin_init.pth
+bash tools/dist_train.sh configs/gss/mseg/gss-ft-w_swin-l_512x512_160k_40k_mseg.py 8 --load-from ckp/gss-ff_swin-l_512x512_160k_mseg_iter_160000.pth
 ```
 
 3. **Evaluate GSS-FT**
