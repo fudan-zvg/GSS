@@ -39,7 +39,7 @@ pip install -e .
 4. Install GSS
 ```shell
 cd ..
-git clone git@github.com:fudan-zvg/GSS.git
+git clone git@github.com:LogosIntelligenceLab/GSS.git
 cd GSS/
 pip install -e .
 ```
